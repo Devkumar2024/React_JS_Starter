@@ -1,0 +1,9 @@
+/* Bye.module.css */
+.test {
+  color: red; 
+  font-size: 50px; /* Added 'px' unit */
+  font-weight: 400;
+  font-family: sans-serif; /* Removed quotes */
+  background-color: yellow; /* Removed quotes */
+  text-align: center; /* Removed quotes */
+}
