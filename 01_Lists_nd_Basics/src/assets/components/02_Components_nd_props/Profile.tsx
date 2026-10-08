@@ -1,53 +1,53 @@
 import "./foundation.css";
+type Profileprops = {
+  name: string;
+  birthYear: number;
+  city: string;
+  role: string;
+  skills: string[];
+};
 
-export function Profile() {
-  const name: string = "Dev kumar";
-  const birthY: number = 2003;
-  const city: string = "Bhikhiwind, Asr.";
-  const role: string = "Jr SE Intern";
-
-  function DOB(year: number): number {
+export function Profile(props: Profileprops) {
+  function YOB(year: number): number {
     const currentYear: number = new Date().getFullYear();
     return currentYear - year;
   }
-
+  const age = YOB(props.birthYear);
   return (
     <div id="profile">
       <h3 id="name">
         <strong>Name : </strong>
-        {name}
+        {props.name}
       </h3>
-      
+
       <h3
         id="birth"
         style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
       >
         <strong>Age : </strong>
-        {DOB(birthY)},{" "}
-        {DOB(birthY) > 18 ? <span>Adult</span> : <span>Child</span>}
+        {age}, {age > 18 ? <span>Adult</span> : <span>Child</span>}
       </h3>
 
       <h3 id="city">
         <strong>City : </strong>
-        {city}
+        {props.city}
       </h3>
       <h3 id="role">
         <strong>Role : </strong>
-        {role}
+        {props.role}
       </h3>
 
       <p id="about">
-        Hi, I am {name}, currently living in {city} and I am currently {role}.
-        and i am learning
+        Hi, I am {props.name}, currently living in {props.city} and I am
+        currently {props.role}. and i am learning
       </p>
       <ul>
-        <li>TypeScript</li>
-        <li>React</li>
-        <li>Next JS</li>
-        <li>CSS</li>
+        {props.skills.map((skill: string) => {
+          return <li key={skill}>{skill}</li>;
+        })}
       </ul>
     </div>
   );
 }
 
-export default Profile;
+// export default Profile;

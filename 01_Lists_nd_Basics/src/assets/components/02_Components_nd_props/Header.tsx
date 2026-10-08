@@ -1,10 +1,13 @@
 import "./foundation.css";
+type HeaderProps = {
+  name : string;
+}
 
-export function Header() {
+export function Header({name}: HeaderProps) {
   return (
     <div id="header">
       <h2>
-        <a href="#">Dev K.</a>
+        <a href="#">{name}</a>
       </h2>
       <nav id="navbar">
         <a href="#profile">About</a>
@@ -15,4 +18,4 @@ export function Header() {
   );
 }
 
-export default Header;
+// export default Header;
