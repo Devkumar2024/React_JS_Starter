@@ -77,3 +77,10 @@
 #footer a:hover {
   color: #0070f3;
 }
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: #333;
+  width: 100%; /* Shortens the line length */
+}

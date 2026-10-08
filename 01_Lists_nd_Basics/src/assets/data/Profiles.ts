@@ -1,11 +1,17 @@
 // src/data/profiles.ts
-import type { ProfileProps } from "../components/02_Components_nd_props/Profile";
+type ProfileProps = {
+  name: string;
+  birthYear: number;
+  city: string;
+  role: string;
+  skills: string[];
+};
 
 export const profiles: ProfileProps[] = [
   {
     name: "Ananya Sharma",
     birthYear: 2002,
-    city: "Mumbai",
+    city: "",
     role: "IAS Officer",
     skills: ["Public Admin", "Economics", "Hindi", "English"],
   },
@@ -20,7 +26,7 @@ export const profiles: ProfileProps[] = [
     name: "Rohan Mehta",
     birthYear: 1995,
     city: "Bengaluru",
-    role: "Senior Software Engineer",
+    role: "",
     skills: ["Go", "Kubernetes", "PostgreSQL", "System Design"],
   },
   {
@@ -28,26 +34,19 @@ export const profiles: ProfileProps[] = [
     birthYear: 1998,
     city: "Kochi",
     role: "Product Designer",
-    skills: ["Figma", "UX Research", "Prototyping", "Design Systems"],
-  },
-  {
-    name: "Arjun Singh",
-    birthYear: 2010,
-    city: "Jaipur",
-    role: "Student",
-    skills: ["Math", "Science", "Sketching"],
+    skills: [],
   },
   {
     name: "Meera Iyer",
     birthYear: 1988,
     city: "Chennai",
-    role: "Cardiologist",
+    role: "",
     skills: ["Surgery", "Diagnostics", "Patient Care", "Tamil", "English"],
   },
   {
     name: "Kabir Khan",
     birthYear: 1992,
-    city: "Delhi",
+    city: "",
     role: "Freelance Photographer",
     skills: ["Lightroom", "Portraits", "Street Photography"],
   },
@@ -56,7 +55,7 @@ export const profiles: ProfileProps[] = [
     birthYear: 2000,
     city: "Hyderabad",
     role: "Data Analyst",
-    skills: ["SQL", "Python", "Tableau", "Statistics"],
+    skills: [],
   },
   {
     name: "Vikram Joshi",
@@ -87,26 +86,13 @@ export const profiles: ProfileProps[] = [
     skills: ["Copywriting", "SEO", "Bengali", "English"],
   },
   {
-    name: "Farhan Ali",
-    birthYear: 1985,
-    city: "Ahmedabad",
-    role: "Chartered Accountant",
-    skills: ["Taxation", "Audit", "Excel", "GST"],
-  },
-  {
-    name: "Neha Kulkarni",
-    birthYear: 1999,
-    city: "Nagpur",
-    role: "Frontend Developer",
-    skills: ["React", "TypeScript", "Tailwind", "Testing"],
-  },
-  {
     name: "Siddharth Rao",
     birthYear: 2008,
     city: "Indore",
     role: "Student",
-    skills: ["Cricket", "Math", "HTML"],
+    skills: [],
   },
+
   {
     name: "Tanvi Desai",
     birthYear: 1991,
@@ -114,54 +100,20 @@ export const profiles: ProfileProps[] = [
     role: "UI Engineer",
     skills: ["Vue", "SCSS", "Accessibility", "Animation"],
   },
-  {
-    name: "Aarav Gupta",
-    birthYear: 1994,
-    city: "Bhopal",
-    role: "DevOps Engineer",
-    skills: ["AWS", "Terraform", "CI/CD", "Linux"],
+   {
+    name: "Yash Agarwal",
+    birthYear: 2012,
+    city: "Shimla",
+    role: "Student",
+    skills: [],
   },
-  {
-    name: "Riya Malhotra",
-    birthYear: 2001,
-    city: "Gurugram",
-    role: "Marketing Manager",
-    skills: ["Campaigns", "Analytics", "Branding"],
-  },
-  {
-    name: "Manish Tiwari",
-    birthYear: 1982,
-    city: "Patna",
-    role: "Civil Engineer",
-    skills: ["AutoCAD", "Site Management", "Estimation"],
-  },
-  {
-    name: "Pooja Bhatt",
-    birthYear: 1996,
-    city: "Dehradun",
-    role: "Teacher",
-    skills: ["Curriculum", "Classroom Mgmt", "Hindi", "English"],
-  },
-  {
-    name: "Karan Kapoor",
-    birthYear: 1989,
-    city: "Goa",
-    role: "Chef",
-    skills: ["Continental", "Plating", "Kitchen Ops"],
-  },
+
   {
     name: "Divya Menon",
     birthYear: 2004,
-    city: "Thiruvananthapuram",
+    city: "",
     role: "Intern",
     skills: ["Python", "Pandas", "Excel"],
-  },
-  {
-    name: "Harsh Patel",
-    birthYear: 1990,
-    city: "Rajkot",
-    role: "Mobile Developer",
-    skills: ["Flutter", "Kotlin", "Firebase"],
   },
   {
     name: "Nisha Choudhary",
@@ -169,12 +121,5 @@ export const profiles: ProfileProps[] = [
     city: "Jodhpur",
     role: "HR Lead",
     skills: ["Recruiting", "L&D", "Payroll", "Conflict Resolution"],
-  },
-  {
-    name: "Yash Agarwal",
-    birthYear: 2012,
-    city: "Shimla",
-    role: "Student",
-    skills: ["Reading", "Drawing"],
   },
 ];

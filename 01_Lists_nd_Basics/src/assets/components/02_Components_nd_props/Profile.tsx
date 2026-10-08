@@ -1,5 +1,5 @@
 import "./foundation.css";
-type Profileprops = {
+type ProfileProps = {
   name: string;
   birthYear: number;
   city: string;
@@ -7,11 +7,12 @@ type Profileprops = {
   skills: string[];
 };
 
-export function Profile(props: Profileprops) {
-  function YOB(year: number): number {
-    const currentYear: number = new Date().getFullYear();
-    return currentYear - year;
-  }
+function YOB(year: number): number {
+  const currentYear: number = new Date().getFullYear();
+  return currentYear - year;
+}
+
+export function Profile(props: ProfileProps) {
   const age = YOB(props.birthYear);
   return (
     <div id="profile">
@@ -30,22 +31,37 @@ export function Profile(props: Profileprops) {
 
       <h3 id="city">
         <strong>City : </strong>
-        {props.city}
+        {props.city === "" ? `City name not Given` : props.city}
       </h3>
       <h3 id="role">
         <strong>Role : </strong>
-        {props.role}
+        {props.role === "" ? `Role not assigned` : props.role}
       </h3>
 
       <p id="about">
-        Hi, I am {props.name}, currently living in {props.city} and I am
-        currently {props.role}. and i am learning
+        Hi, I am {props.name}, currently living in{" "}
+        {props.city === "" ? `Not specified` : props.city} and I am currently{" "}
+        {props.role === "" ? `Role not assigned` : props.role}. and i am
+        learning
       </p>
-      <ul>
-        {props.skills.map((skill: string) => {
-          return <li key={skill}>{skill}</li>;
-        })}
-      </ul>
+
+      {/* condotional rendering */}
+
+      <p>
+        {" "}
+        Total skills :{" "}
+        {props.skills.length > 0 ? `${props.skills.length}` : `No Skills`}
+      </p>
+
+      {props.skills.length > 0 ? (
+        <ul>
+          {props.skills.map((skill: string) => {
+            return <li key={skill}>{skill}</li>;
+          })}
+        </ul>
+      ) : (
+        <p>No skills</p>
+      )}
     </div>
   );
 }
