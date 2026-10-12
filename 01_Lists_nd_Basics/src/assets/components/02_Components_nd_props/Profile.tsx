@@ -62,6 +62,8 @@ export function Profile(props: ProfileProps) {
       ) : (
         <p>No skills</p>
       )}
+
+      <hr/>
     </div>
   );
 }

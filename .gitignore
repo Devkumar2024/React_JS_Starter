@@ -34,3 +34,18 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# TypeScript Cache (Crucial for TSX projects)
+*.tsbuildinfo
+
+# Testing
+coverage/
+
+# ESLint Cache (The one that caused the error earlier!)
+.eslintcache
+
+# Lock files (OPTIONAL: Add ONLY if you are building an npm package/library. 
+# Keep them tracked if this is a standard app)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

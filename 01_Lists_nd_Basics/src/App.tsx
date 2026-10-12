@@ -9,13 +9,13 @@ import { profiles } from "./assets/data/Profiles";
 function App() {
   return (
     <>
-      <Header name="Ananya S." />
+      <Header name="Dev K. 👍" />
       {
         profiles.map((value)=>{
           return < Profile  key = {value.name} {...value}/> 
         })
       }
-      <Footer name="Ananya Sharma" />
+      <Footer name="Dev Sharma" />
     </>
   );
 }

@@ -12,7 +12,7 @@ export function Header({name}: HeaderProps) {
       <nav id="navbar">
         <a href="#profile">About</a>
         <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+        <a href="#footer">Contact</a>
       </nav>
     </div>
   );

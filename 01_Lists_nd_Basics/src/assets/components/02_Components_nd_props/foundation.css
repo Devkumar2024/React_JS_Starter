@@ -6,6 +6,9 @@
   padding: 1rem 2rem;
   color: beige;
   background-color: #1a1a1a;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 #header h2 {
@@ -80,7 +83,7 @@
 
 hr {
   border: none;
-  height: 2px;
+  height: 1.5px;
   background-color: #333;
   width: 100%; /* Shortens the line length */
 }
