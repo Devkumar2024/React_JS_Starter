@@ -1,10 +1,11 @@
 import {ProfileViews} from "./components/ProfileViews"
 import {SkillSet} from './components/SkillsList'
-import './App.css'
+import './index.css'
 
 function App() {
   return (
    <>
+   <h1>👤 My Profile Dashboard</h1>
    <ProfileViews/>
    <SkillSet/>
    </>
