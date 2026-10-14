@@ -13,7 +13,7 @@ export const profiles: ProfileProps[] = [
     birthYear: 2002,
     city: "",
     role: "IAS Officer",
-    skills: ["Public Admin", "Economics", "Hindi", "English"],
+    skills: [],
   },
   {
     name: "Dev K.",
