@@ -1,10 +1,101 @@
-div {  
+/* profile.css - shared by ProfileViews and SkillSet */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: #1a1a1a;
+  color: beige;
+  line-height: 1.5;
+}
+
+/* Shared container */
+.ProfileCard,
+.Skills {
+  max-width: 420px;
+  margin: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: #232323;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Skills list */
+.Skills ul {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.Skills li {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  color: beige;
-  background-color: #1a1a1a;}
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #2e2e2e;
+}
 
-  button{
-    margin: 5px;
-  }
+/* Buttons */
+button {
+  margin: 4px;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: beige;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+  border-color: #4a4a4a;
+}
+
+.itemBTN {
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.itemBTN:hover {
+  background-color: #5a2a2a;
+  border-color: #7a3a3a;
+}
+
+/* Input */
+input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: beige;
+  font-size: 0.9rem;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #c9b88a;
+  outline-offset: 2px;
+}

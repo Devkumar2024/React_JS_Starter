@@ -7,7 +7,7 @@ export function ProfileViews() {
   const [profile, setProfile] = useState<Profile>({
     name : "Dev",
     city : "Ludhiana",
-    role : "Jr. SE INtern",
+    role : "Jr. SE Intern",
   })
 
   const increment = () => setNum(num => num + 1);

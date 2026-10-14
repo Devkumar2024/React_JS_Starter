@@ -3,3 +3,8 @@ export interface Profile {
   city: string;
   role: string;
 }
+
+export interface Skill {
+  id: number;
+  name: string;
+}
