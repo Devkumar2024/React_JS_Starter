@@ -1,9 +1,16 @@
 import "./App.css";
+import { ProfileViews } from "./components/ProfileViews";
+import { StudySessions } from "./components/StudySessions";
+import { SkillsList } from "./components/SkillsList";
+import { ProfileCard } from "./components/ProfileCard";
 
 function App() {
   return (
     <>
-      <h1>Event and Effects</h1>
+      <ProfileCard />
+      <ProfileViews />
+      <StudySessions />
+      <SkillsList />
     </>
   );
 }

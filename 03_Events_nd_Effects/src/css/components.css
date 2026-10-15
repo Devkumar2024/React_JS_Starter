@@ -1,0 +1,116 @@
+body {
+  background: #12151c;
+  color: #e6e9ef;
+  font-family: system-ui, sans-serif;
+  padding: 30px 15px;
+}
+
+/* cards */
+.ProfileCard,
+.ProfileViews,
+.StudySessions,
+.skillList {
+  max-width: 400px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  background: #1b1f29;
+  border: 1px solid #2c3240;
+  border-radius: 12px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-top: 0;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+/* buttons */
+button {
+  padding: 7px 14px;
+  margin-right: 6px;
+  background: #272d3a;
+  color: #e6e9ef;
+  border: 1px solid #3a4153;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #323a4b;
+}
+
+/* inputs */
+input {
+  padding: 8px 10px;
+  background: #12151c;
+  color: #e6e9ef;
+  border: 1px solid #3a4153;
+  border-radius: 6px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6c7dff;
+}
+
+/* ProfileCard */
+.ProfileCard p {
+  margin: 8px 0;
+}
+
+.ProfileCard input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.ProfileCard button {
+  margin-top: 10px;
+}
+
+/* counters */
+.ProfileViews h4,
+.StudySessions h4 {
+  font-size: 40px;
+  margin: 10px 0 15px;
+}
+
+/* SkillsList */
+.skillList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skillList li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: #232835;
+  border-radius: 8px;
+}
+
+/* name on the left, buttons pushed to the right */
+.skillList li button:first-of-type {
+  margin-left: auto;
+}
+
+.skillList li input {
+  flex: 1;
+}
+
+.skillList li button {
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+}
+
+.skillList li button:hover {
+  background: #323a4b;
+}
