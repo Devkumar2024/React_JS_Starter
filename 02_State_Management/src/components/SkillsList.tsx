@@ -67,10 +67,6 @@ export function SkillSet() {
                     <input
                       value={editValue}
                       onChange={(e) => setEditValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") handleEditSave();
-                        if (e.key === "Escape") handleEditCancel();
-                      }}
                     />
                     <button onClick={handleEditSave}>💾 Save</button>
                     <button onClick={handleEditCancel}>Cancel</button>
@@ -104,3 +100,8 @@ export function SkillSet() {
     </div>
   );
 }
+
+// onKeyDown={(e) => {
+//   if (e.key === "Enter") handleEditSave();
+//   if (e.key === "Escape") handleEditCancel();
+// }}
