@@ -1,5 +1,18 @@
 /* profile.css - shared by ProfileViews and SkillSet */
 
+:root {
+  --bg: #e3f0ee;
+  --surface: #f4faf9;
+  --control: #d3e6e3;
+  --control-hover: #c2dcd8;   /* new */
+  --border: #b5d0cc;
+  --border-strong: #8fb5af;   /* new: buttons/inputs */
+  --text: #1f3436;
+  --muted: #557174;
+  --accent: #2a8479;
+  --danger: #c0504d;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,39 +21,39 @@
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: #1a1a1a;
-  color: beige;
+  background-color: var(--bg);
+  color: var(--text);
   line-height: 1.5;
-
 }
 
-/* Shared container */
-.ProfileCard,
+/* Shared container: same width for both cards */
+.ProfileSection,
 .Skills {
+  width: 100%;
   max-width: 420px;
   margin: 1rem;
-  padding: 1rem 1.5rem;
-  background-color: #232323;
-  border: 1px solid #2e2e2e;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+.ProfileSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-h3 {
-  font-size: 1rem;
-  margin-top: 1rem;
+h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; margin-top: 0.5rem; }
+h4 { font-size: 1rem; color: var(--muted); font-weight: 500; margin-bottom: 0.5rem; }
+
+/* Numbered skills in profile card */
+.ProfileSection ol {
+  padding-left: 1.25rem;
 }
 
-h4 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Skills list */
+/* Pending list */
 .Skills ul {
   list-style: none;
   margin-bottom: 1rem;
@@ -48,27 +61,43 @@ h4 {
 
 .Skills li {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #2e2e2e;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* task text takes the free space, buttons stay right-aligned */
+.Skills li > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.Skills li:last-child {
+  border-bottom: none;
 }
 
 /* Buttons */
 button {
-  margin: 4px;
   padding: 0.4rem 0.9rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid var(--border-strong);
   border-radius: 6px;
-  background-color: #2a2a2a;
-  color: beige;
+  background-color: var(--control);
+  color: var(--text);
+  font: inherit;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
 }
 
 button:hover {
-  background-color: #333;
-  border-color: #4a4a4a;
+  background-color: var(--control-hover);
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .itemBTN {
@@ -76,27 +105,38 @@ button:hover {
   font-size: 0.8rem;
 }
 
+/* delete-style hover: soft red tint instead of dark red */
 .itemBTN:hover {
-  background-color: #5a2a2a;
-  border-color: #7a3a3a;
+  background-color: #f3dcdb;
+  border-color: var(--danger);
 }
 
 /* Input */
 input {
   padding: 0.4rem 0.6rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid var(--border-strong);
   border-radius: 6px;
-  background-color: #2a2a2a;
-  color: beige;
+  background-color: #fff;
+  color: var(--text);
+  font: inherit;
   font-size: 0.9rem;
 }
 
+input + button {
+  margin-left: 0.5rem;
+}
+
 input::placeholder {
-  color: #888;
+  color: var(--muted);
 }
 
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid #c9b88a;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+b {
+  color: var(--accent);
+  text-transform: capitalize;
 }

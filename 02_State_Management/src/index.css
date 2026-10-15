@@ -18,6 +18,8 @@ body {
     Roboto,
     sans-serif;
   line-height: 1.5;
+  background-color: var(--bg);   /* new: so the page color covers the full viewport */
+  color: var(--text);
 }
 
 #root {
@@ -25,4 +27,5 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0.5rem;               /* new: keeps cards off the screen edge on mobile */
 }

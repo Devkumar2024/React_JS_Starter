@@ -1,86 +1,101 @@
-import { useState } from "react";
 import "./profile.css";
 import type { Skill } from "../types/index";
+import { useState } from "react";
 let nextId: number = 4;
 
 export function SkillSet() {
   const [skills, setSkills] = useState<Skill[]>([
-    { id: 1, name: "TypeScript" },
-    { id: 2, name: "React" },
-    { id: 3, name: "Node.js" },
+    { id: 1, name: "Complete Checkpoint revison" },
+    { id: 2, name: "React-TSX" },
+    { id: 3, name: "Pushing code changes" },
   ]);
+  // add new skills field management
   const [input, setInput] = useState("");
-  const [editingId, setEditingId] = useState<number | null>(null);
+  // Which skill is being edited, Id tracking, null : No skill is being edited
+  const [editSkill_ID, setEditSkillID] = useState<number | null>(null);
+  // temporary buffer state for skill edit
   const [editValue, setEditValue] = useState("");
 
   function handleAdd() {
     const name = input.trim();
     if (!name) return;
-    setSkills((prev) => {
+    setSkills((prev: Skill[]) => {
       return [...prev, { id: nextId++, name }];
     });
     setInput("");
   }
 
   function handleDel(id: number) {
-    // _ is used to ignore, can use ele also
     setSkills((prev) => prev.filter((ele) => ele.id !== id));
   }
 
   function handleEditStart(id: number, currentName: string) {
-    setEditingId(id);
+    setEditSkillID(id);
     setEditValue(currentName);
   }
 
   function handleEditSave() {
-    if (editingId === null) return;
-    const trimmed = editValue.trim();
-    if (!trimmed) return;
+    if (editSkill_ID === null) return;
+    const trimmedName = editValue.trim();
+    if (!trimmedName) return;
 
     setSkills((prev) =>
-      prev.map((s) => (s.id === editingId ? { ...s, name: trimmed } : s)),
+      // Go till id which we want to edit
+      prev.map((s) => (s.id === editSkill_ID ? { ...s, name: trimmedName } : s)),
     );
-    setEditingId(null);
+    setEditSkillID(null);
     setEditValue("");
   }
 
   function handleEditCancel() {
-    setEditingId(null);
+    setEditSkillID(null);
     setEditValue("");
   }
 
   return (
     <div className="Skills">
-      <h1>🛠️ Skills (Total Skills: {skills.length})</h1>
+      <h1>Pending Work List 🛠️ : {skills.length}</h1>
 
       {skills.length === 0 ? (
-        <p>Add Skills !!</p>
+        <p> Add Work !!! </p>
       ) : (
         <ul>
           {skills.map((skill) => {
-            console.log("skill:", skill.id, skill.name);
             return (
               <li key={skill.id}>
-                {editingId === skill.id ? (
-                  // EDIT MODE
+                {editSkill_ID === skill.id ? (
+                  // editing mode
                   <>
                     <input
                       value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
+                      onChange={(e) => {
+                        setEditValue(e.target.value);
+                      }}
                     />
-                    <button onClick={handleEditSave}>💾 Save</button>
-                    <button onClick={handleEditCancel}>Cancel</button>
+
+                    <button
+                      onClick={handleEditSave}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleEditSave();
+                        if (e.key === "Escape") handleEditCancel();
+                      }}>
+                      💾
+                    </button>
+                    <button
+                      onClick={handleEditCancel}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleEditSave();
+                        if (e.key === "Escape") handleEditCancel();
+                      }}>
+                      ✖️
+                    </button>
                   </>
                 ) : (
-                  // VIEW MODE
+                  // Value mode
                   <>
                     {skill.name}
-                    <button
-                      onClick={() => handleEditStart(skill.id, skill.name)}
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button onClick={() => handleDel(skill.id)}>Remove</button>
+                    <button onClick={() => handleEditStart(skill.id, skill.name)}> ✏️ Edit</button>
+                    <button onClick={() => handleDel(skill.id)}>👉🏻🗑️</button>
                   </>
                 )}
               </li>
@@ -90,18 +105,8 @@ export function SkillSet() {
       )}
 
       {/* Controlled Input */}
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="New Skill...."
-      />
-
+      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="New Skill...." />
       <button onClick={handleAdd}>Add Skills</button>
     </div>
   );
 }
-
-// onKeyDown={(e) => {
-//   if (e.key === "Enter") handleEditSave();
-//   if (e.key === "Escape") handleEditCancel();
-// }}
