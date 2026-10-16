@@ -1,6 +1,7 @@
 import type { Profile } from "../types/index";
 import { useState } from "react";
 import "../css/components.css";
+import { Button } from "./ui/Button";
 
 export function ProfileCard() {
   const [person, setPerson] = useState<Profile>({
@@ -10,6 +11,11 @@ export function ProfileCard() {
   });
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [buffer, setBuffer] = useState<Profile>(person);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
+
+  function handleToggleDetails() {
+    setShowDetails((prev) => !prev);
+  }
 
   function handleEditingStart() {
     setBuffer(person);
@@ -39,8 +45,8 @@ export function ProfileCard() {
           <input value={buffer.city} onChange={(e) => valueChangeHandler("city", e.target.value)} />
           <input value={buffer.role} onChange={(e) => valueChangeHandler("role", e.target.value)} />
 
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleCancel}>Cancel</Button>
         </>
       ) : (
         <>
@@ -48,8 +54,19 @@ export function ProfileCard() {
           <p>City : {person.city}</p>
           <p>Role : {person.role}</p>
 
-          <button onClick={handleEditingStart}>Edit Profile Section</button>
+          <Button onClick={handleEditingStart}>Edit Profile Section</Button>
         </>
+      )}
+      <Button onClick={handleToggleDetails}>Show Details</Button>
+      {showDetails && (
+        <div>
+          <p>
+            <b>Joined :</b> October 2026
+          </p>
+          <p>
+            <b>Department :</b> Full stack Engineering
+          </p>
+        </div>
       )}
     </div>
   );

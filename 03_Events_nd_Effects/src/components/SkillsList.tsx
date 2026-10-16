@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Skills } from "../types/index";
 import "../css/components.css";
+import { Button } from "./ui/Button";
 
 let nextId = 4;
 
@@ -40,11 +41,8 @@ export function SkillsList() {
   // 4b. Save the edit
   function handleEditSave() {
     const name = editValue.trim();
-
     if (!name) return;
-
     setSkills((prev) => prev.map((skill) => (skill.id === editSkill_ID ? { ...skill, name } : skill)));
-
     setEditSkillID(null);
     setEditValue("");
   }
@@ -53,6 +51,10 @@ export function SkillsList() {
   function handleEditCancel() {
     setEditSkillID(null);
     setEditValue("");
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInput(e.target.value);
   }
 
   // 5. Render the UI
@@ -66,36 +68,22 @@ export function SkillsList() {
             {editSkill_ID === skill.id ? (
               <>
                 <input value={editValue} onChange={(e) => setEditValue(e.target.value)} />
-
-                <button onClick={handleEditSave} aria-label="Save" title="Save">
-                  ✅
-                </button>
-                <button onClick={handleEditCancel} aria-label="Cancel" title="Cancel">
-                  ❌
-                </button>
+                <Button onClick={handleEditSave}>✅</Button>
+                <Button onClick={handleEditCancel}>❌</Button>
               </>
             ) : (
               <>
                 {skill.name}
-
-                <button onClick={() => handleEditStart(skill.id, skill.name)} aria-label="Edit" title="Edit">
-                  ✏️
-                </button>
-
-                <button onClick={() => handleDel(skill.id)} aria-label="Delete" title="Delete">
-                  🗑️
-                </button>
+                <Button onClick={() => handleEditStart(skill.id, skill.name)}>✏️</Button>
+                <Button onClick={() => handleDel(skill.id)}>🗑️</Button>
               </>
             )}
           </li>
         ))}
       </ul>
 
-      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Add skill..." />
-
-      <button onClick={handleAdd} aria-label="Add Skill" title="Add Skill">
-        ➕
-      </button>
+      <input value={input} onChange={handleInputChange} placeholder="Add skill..." />
+      <Button onClick={handleAdd}>➕</Button>
     </div>
   );
 }
