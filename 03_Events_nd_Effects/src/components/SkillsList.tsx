@@ -20,7 +20,6 @@ export function SkillsList() {
   // 2. Add a skill
   function handleAdd() {
     const name = input.trim();
-
     if (!name) return;
 
     setSkills((prev) => [...prev, { id: nextId++, name }]);

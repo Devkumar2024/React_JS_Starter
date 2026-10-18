@@ -2,6 +2,7 @@ import type { Profile } from "../types/index";
 import { useState } from "react";
 import "../css/components.css";
 import { Button } from "./ui/Button";
+import type { ChangeEvent } from 'react'
 
 export function ProfileCard() {
   const [person, setPerson] = useState<Profile>({
@@ -31,8 +32,9 @@ export function ProfileCard() {
     setIsEditing(false);
   }
 
-  function valueChangeHandler(key_val: keyof Profile, newValue: string) {
-    setBuffer((prev) => ({ ...prev, [key_val]: newValue }));
+  function valueChangeHandler(e : ChangeEvent<HTMLInputElement>) {
+    const {name, value} = e.currentTarget;
+    setBuffer((prev) => ({ ...prev, [name]: value }));
   }
 
   return (
@@ -41,9 +43,9 @@ export function ProfileCard() {
 
       {isEditing ? (
         <>
-          <input value={buffer.name} onChange={(e) => valueChangeHandler("name", e.target.value)} />
-          <input value={buffer.city} onChange={(e) => valueChangeHandler("city", e.target.value)} />
-          <input value={buffer.role} onChange={(e) => valueChangeHandler("role", e.target.value)} />
+          <input value={buffer.name} onChange={valueChangeHandler} />
+          <input value={buffer.city} onChange={valueChangeHandler} />
+          <input value={buffer.role} onChange={valueChangeHandler} />
 
           <Button onClick={handleSave}>Save</Button>
           <Button onClick={handleCancel}>Cancel</Button>
