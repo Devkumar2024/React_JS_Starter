@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import type { Skill } from "../../types/index";
-import '../../css/components.css'
+import "../../css/components.css";
 import Button from "../ui/Button";
 
 export function SkillList() {
@@ -11,7 +11,7 @@ export function SkillList() {
   ]);
   const [input, setInput] = useState<string>("");
 
-  function handleSkillsAdd(){
+  function handleSkillsAdd() {
     const n = input.trim();
     if (!n) return;
     const newID = nextID.current++;
@@ -22,6 +22,15 @@ export function SkillList() {
   function handleDelete(id: number) {
     // yaha array nhi element pass hua hai
     setSkills((prev) => prev.filter((ele) => ele.id !== id));
+  }
+
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+    handleSkillsAdd();
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInput(e.currentTarget.value);
   }
 
   return (
@@ -36,8 +45,10 @@ export function SkillList() {
         ))}
       </ul>
 
-      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="add skills..." />
-      <Button onClick={handleSkillsAdd}>Add skills</Button>
+      <form onSubmit={handleSubmit}>
+        <input value={input} onChange={handleInputChange} placeholder="add skills..." />
+        <Button type="submit">Add skills</Button>
+      </form>
     </div>
   );
 }

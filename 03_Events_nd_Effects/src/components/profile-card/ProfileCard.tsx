@@ -18,10 +18,14 @@ export function ProfileCard() {
 
   function handleValue(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
-    setDraft((prev) => ({
-      ...prev,
-      [name]: name === "birthYear" ? Number(value) : value,
-    }));
+    // setDraft((prev) => ({
+    //   ...prev,
+    //   [name]: name === "birthYear" ? Number(value) : value,
+    // }));
+    if (name === "birthYear") {
+      setDraft((prev) => ({ ...prev, birthYear: Number(value) }));
+    }
+    setDraft((prev) => ({ ...prev, [name as keyof Profile]: value }));
   }
 
   function handleContent() {
