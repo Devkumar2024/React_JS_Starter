@@ -3,18 +3,19 @@ import type { Profile } from "../../types/index";
 import "../../css/components.css";
 import Button from "../ui/Button";
 
-export function ProfileCard() {
-  const [profile, setProfile] = useState<Profile>({
-    name: "Dev",
-    city: "Jakarta",
-    role: "Cisco TAC Engineer",
-    birthYear: 1889,
-  });
+interface props {
+  profile: Profile;
+  setProfile: React.Dispatch<React.SetStateAction<Profile>>;
+}
+
+export function ProfileCard({ profile, setProfile }: props) {
   // editable from of profilecard
   const [draft, setDraft] = useState<Profile>(profile);
   // Mode : edit/ non-edit
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [showDetails, setShowDetails] = useState<boolean>(false);
+  // age is a derived value derived during render not a side effect
+  const age = new Date().getFullYear() - profile.birthYear;
 
   function handleValue(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
@@ -70,6 +71,7 @@ export function ProfileCard() {
           <p>Worplace : {profile.city}</p>
           <p>Role : {profile.role}</p>
           <p>YOB : {profile.birthYear}</p>
+          <p>YOB : {age}</p>
           <Button onClick={handleContent}>Change Content</Button>
         </>
       )}
