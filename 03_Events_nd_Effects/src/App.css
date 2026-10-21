@@ -1,0 +1,11 @@
+/* ==========================================================
+   App.css — app-level layout only
+   Card, button and input styles live in components.css.
+   ========================================================== */
+ 
+h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-5);
+  text-align: center;
+}

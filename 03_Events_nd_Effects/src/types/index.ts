@@ -2,10 +2,11 @@
 export interface Profile{
     name : string,
     city : string,
-    role : string
+    role : string,
+    birthYear : number,
 }
 
-export interface Skills {
+export interface Skill {
     id : number,
     name : string,
 }

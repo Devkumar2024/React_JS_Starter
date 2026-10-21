@@ -1,3 +1,40 @@
+/* ==========================================================
+   index.css — global reset, design tokens, page base
+   (the only file that defines :root variables and body styles)
+   ========================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #12151c;
+  --surface: #1b1f29;
+  --surface-2: #232835;
+  --surface-3: #2d3445;
+
+  /* lines */
+  --border: #2c3240;
+  --border-strong: #3a4153;
+
+  /* text */
+  --text: #e6e9ef;
+  --text-muted: #9aa3b5;
+
+  /* accents */
+  --accent: #6c7dff;
+  --danger: #ff7a85;
+
+  /* shape + spacing */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+}
+
 *,
 *::before,
 *::after {
@@ -11,15 +48,11 @@ body {
 }
 
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.5;
-  background-color: var(--bg);   /* new: so the page color covers the full viewport */
+  background-color: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
@@ -27,5 +60,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;               /* new: keeps cards off the screen edge on mobile */
+  padding: var(--space-5) var(--space-3);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

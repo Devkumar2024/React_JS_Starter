@@ -1,116 +1,161 @@
-body {
-  background: #12151c;
-  color: #e6e9ef;
-  font-family: system-ui, sans-serif;
-  padding: 30px 15px;
-}
+/* ==========================================================
+   components.css — shared controls + per-component styles
+   Class names match the TSX files exactly:
+     ProfileCard.tsx    -> .profileCard
+     ProfileViews.tsx   -> .ProfileViews
+     StudySessions.tsx  -> .ProfileViews (it reuses that class)
+                           and .StudySessions once you rename it
+     SkillList.tsx      -> .SkillList
+   ========================================================== */
 
-/* cards */
-.ProfileCard,
+/* ---------- shared card shell ---------- */
+.profileCard,
 .ProfileViews,
 .StudySessions,
-.skillList {
+.SkillList {
+  width: 100%;
   max-width: 400px;
-  margin: 0 auto 20px;
-  padding: 20px;
-  background: #1b1f29;
-  border: 1px solid #2c3240;
-  border-radius: 12px;
+  margin: 0 auto var(--space-4);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
-h1 {
-  font-size: 20px;
-  margin-top: 0;
+.profileCard h4,
+.ProfileViews h4,
+.StudySessions h4,
+.SkillList h5 {
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
-h3 {
-  margin-top: 0;
-}
-
-/* buttons */
+/* ---------- buttons ---------- */
 button {
-  padding: 7px 14px;
-  margin-right: 6px;
-  background: #272d3a;
-  color: #e6e9ef;
-  border: 1px solid #3a4153;
-  border-radius: 6px;
+  font: inherit;
+  padding: 0.45rem 0.9rem;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 button:hover {
-  background: #323a4b;
+  background: var(--surface-3);
 }
 
-/* inputs */
+button:active {
+  background: var(--border-strong);
+}
+
+/* ---------- inputs ---------- */
 input {
-  padding: 8px 10px;
-  background: #12151c;
-  color: #e6e9ef;
-  border: 1px solid #3a4153;
-  border-radius: 6px;
+  font: inherit;
+  padding: 0.5rem 0.65rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+
+input::placeholder {
+  color: var(--text-muted);
 }
 
 input:focus {
   outline: none;
-  border-color: #6c7dff;
+  border-color: var(--accent);
 }
 
-/* ProfileCard */
-.ProfileCard p {
-  margin: 8px 0;
+/* ---------- ProfileCard ---------- */
+.profileCard p {
+  margin: var(--space-2) 0;
 }
 
-.ProfileCard input {
+.profileCard input {
   display: block;
   width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-3);
 }
 
-.ProfileCard button {
-  margin-top: 10px;
+.profileCard br {
+  display: none; /* inputs are already block-level */
 }
 
-/* counters */
-.ProfileViews h4,
-.StudySessions h4 {
-  font-size: 40px;
-  margin: 10px 0 15px;
+.profileCard button {
+  margin: var(--space-2) var(--space-2) 0 0;
 }
 
-/* SkillsList */
-.skillList ul {
+/* ---------- counters (ProfileViews / StudySessions) ---------- */
+.ProfileViews h3,
+.StudySessions h3 {
+  margin: 0 0 var(--space-4);
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ProfileViews button,
+.StudySessions button {
+  margin-right: var(--space-2);
+}
+
+/* ---------- SkillList ---------- */
+.SkillList ul {
   list-style: none;
+  margin: 0 0 var(--space-4);
   padding: 0;
 }
 
-.skillList li {
+.SkillList li {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 10px;
-  margin-bottom: 8px;
-  background: #232835;
-  border-radius: 8px;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
 }
 
-/* name on the left, buttons pushed to the right */
-.skillList li button:first-of-type {
-  margin-left: auto;
-}
-
-.skillList li input {
-  flex: 1;
-}
-
-.skillList li button {
-  padding: 4px 8px;
+/* delete button: quiet text button pushed to the right */
+.SkillList li button {
+  margin: 0 0 0 auto;
+  padding: var(--space-1) var(--space-2);
   background: none;
   border: none;
-  font-size: 16px;
+  color: var(--text-muted);
 }
 
-.skillList li button:hover {
-  background: #323a4b;
+.SkillList li button:hover {
+  background: var(--surface-3);
+  color: var(--danger);
+}
+
+/* add-skill row */
+.SkillList > input {
+  width: calc(100% - 6.5rem);
+  margin-right: var(--space-2);
+  vertical-align: middle;
+}
+
+.SkillList > button {
+  vertical-align: middle;
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 420px) {
+  .profileCard,
+  .ProfileViews,
+  .StudySessions,
+  .SkillList {
+    padding: var(--space-4);
+  }
+
+  .SkillList > input {
+    width: 100%;
+    margin: 0 0 var(--space-2);
+  }
 }
