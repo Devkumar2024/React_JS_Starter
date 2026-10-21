@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import type { Skill } from "../../types/index";
 import '../../css/components.css'
+import Button from "../ui/Button";
 
 export function SkillList() {
   const nextID = useRef(3);
@@ -30,13 +31,13 @@ export function SkillList() {
         {skills.map((ele) => (
           <li key={ele.id}>
             {ele.id} = {ele.name}
-            <button onClick={() => handleDelete(ele.id)}>Delete</button>
+            <Button onClick={() => handleDelete(ele.id)}>Delete</Button>
           </li>
         ))}
       </ul>
 
       <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="add skills..." />
-      <button onClick={handleSkillsAdd}>Add skills</button>
+      <Button onClick={handleSkillsAdd}>Add skills</Button>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../../css/components.css'
+import Button from "../ui/Button";
 
 export function StudySessions() {
   const [count, setCount] = useState<number>(0);
@@ -19,9 +20,9 @@ export function StudySessions() {
     <div className="ProfileViews">
       <h4>Profile Views</h4>
       <h3>{count}</h3>
-      <button onClick={handleIncerement}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <button onClick={handleReset}>Reset</button>
+      <Button onClick={handleIncerement}>Increase</Button>
+      <Button onClick={handleDecrease}>Decrease</Button>
+      <Button onClick={handleReset}>Reset</Button>
     </div>
   );
 }

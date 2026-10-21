@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Profile } from "../../types/index";
-import '../../css/components.css'
+import "../../css/components.css";
+import Button from "../ui/Button";
 
 export function ProfileCard() {
   const [profile, setProfile] = useState<Profile>({
@@ -13,13 +14,14 @@ export function ProfileCard() {
   const [draft, setDraft] = useState<Profile>(profile);
   // Mode : edit/ non-edit
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
 
   function handleValue(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
-     setDraft((prev) => ({ 
-    ...prev, 
-    [name]: name === "birthYear" ? Number(value) : value 
-  }));
+    setDraft((prev) => ({
+      ...prev,
+      [name]: name === "birthYear" ? Number(value) : value,
+    }));
   }
 
   function handleContent() {
@@ -37,6 +39,10 @@ export function ProfileCard() {
     setIsEditing(false);
   }
 
+  function handleUserDetails() {
+    setShowDetails((prev) => !prev);
+  }
+
   return (
     <div className="profileCard">
       <h4>Hello all, my details : </h4>
@@ -51,8 +57,8 @@ export function ProfileCard() {
           <input name="birthYear" value={draft.birthYear} onChange={handleValue} />
           <br />
 
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </>
       ) : (
         <>
@@ -60,7 +66,15 @@ export function ProfileCard() {
           <p>Worplace : {profile.city}</p>
           <p>Role : {profile.role}</p>
           <p>YOB : {profile.birthYear}</p>
-          <button onClick={handleContent}>Change Content</button>
+          <Button onClick={handleContent}>Change Content</Button>
+        </>
+      )}
+
+      <Button onClick={handleUserDetails}>Show details</Button>
+      {showDetails && (
+        <>
+          <p>Role: {profile.role}</p>
+          <p>City: {profile.city}</p>
         </>
       )}
     </div>
