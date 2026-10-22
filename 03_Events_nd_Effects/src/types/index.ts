@@ -10,9 +10,3 @@ export interface Skill {
     id : number,
     name : string,
 }
-
-export interface Session {
-  id: number;
-  subject: string;
-  time: string;
-}

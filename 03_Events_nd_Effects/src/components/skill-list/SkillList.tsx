@@ -1,54 +1,39 @@
-import React, { useState, useRef } from "react";
-import type { Skill } from "../../types/index";
-import "../../css/components.css";
-import Button from "../ui/Button";
+// ✅ SAHI: props accept karo
+import { useState } from 'react';
+import type { Skill } from '../../types';
 
-export function SkillList() {
-  const nextID = useRef(3);
-  const [skills, setSkills] = useState<Skill[]>([
-    { id: 1, name: "React-TSX" },
-    { id: 2, name: "Node JS" },
-  ]);
-  const [input, setInput] = useState<string>("");
+type Props = {
+  skills: Skill[];
+  setSkills: React.Dispatch<React.SetStateAction<Skill[]>>;
+};
 
-  function handleSkillsAdd() {
-    const n = input.trim();
-    if (!n) return;
-    const newID = nextID.current++;
-    setSkills((prev) => [...prev, { id: newID, name: n }]);
-    setInput("");
-  }
+export function SkillList({ skills, setSkills }: Props) {
+  const [input, setInput] = useState(''); // Input local rahega
 
-  function handleDelete(id: number) {
-    // yaha array nhi element pass hua hai
-    setSkills((prev) => prev.filter((ele) => ele.id !== id));
-  }
+  const addSkill = () => {
+    if (!input.trim()) return;
+    setSkills(prev => [...prev, { id: Date.now(), name: input }]);
+    setInput('');
+  };
 
-  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-    handleSkillsAdd();
-  }
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInput(e.currentTarget.value);
-  }
+  const removeSkill = (id: number) => {
+    setSkills(prev => prev.filter(s => s.id !== id));
+  };
 
   return (
-    <div className="SkillList">
-      <h5>My skills : {skills.length === 0 ? <span> No skills </span> : skills.length}</h5>
+    <div>
+      <h2>Skills</h2>
       <ul>
-        {skills.map((ele) => (
-          <li key={ele.id}>
-            {ele.id} = {ele.name}
-            <Button onClick={() => handleDelete(ele.id)}>Delete</Button>
+        {skills.map(skill => (
+          <li key={skill.id}>
+            {skill.name} <button onClick={() => removeSkill(skill.id)}>X</button>
           </li>
         ))}
       </ul>
+      {skills.length === 0 && <p>No skills yet</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input value={input} onChange={handleInputChange} placeholder="add skills..." />
-        <Button type="submit">Add skills</Button>
-      </form>
+      <input value={input} onChange={(e) => setInput(e.target.value)} />
+      <button onClick={addSkill}>Add</button>
     </div>
   );
 }
