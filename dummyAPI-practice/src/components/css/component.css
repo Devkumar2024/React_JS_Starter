@@ -1,0 +1,20 @@
+.productCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+.productCard h5{
+    padding: 0;
+    margin: 0;
+}
+
+.productList{
+    display: flex;
+    flex-direction: row;
+}
