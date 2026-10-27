@@ -13,15 +13,28 @@ function App() {
   });
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
-  const [items, setItems] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [items, setItems] = useState<string[]>([]);
 
   useEffect(() => {
     async function getApiData() {
-      const urlResponse = await fetch("https://dummyjson.com/products");
-      const data = await urlResponse.json();
-      setProducts(data.products);
-      setIsLoading(false);
+      try {
+        const urlResponse = await fetch("https://dummyjson.com/products");
+
+        if (!urlResponse.ok) {
+          setHasError(true);
+          setIsLoading(false);
+          return;
+        }
+
+        const data = await urlResponse.json();
+        setProducts(data.products);
+        setIsLoading(false);
+      } catch {
+        setHasError(true);
+        setIsLoading(false);
+      }
     }
     getApiData();
   }, []);
@@ -30,28 +43,34 @@ function App() {
     return <p>Loading.....</p>;
   }
 
+  if (hasError) {
+    return <p>Something went wrong. Please try again.</p>;
+  }
+
   function handleNameChange(name: string) {
-    setProfile((prev) => ({ ...prev, name }));
+    setProfile({ ...profile, name: name });
   }
 
   function handleRoleChange(role: string) {
-    setProfile((prev) => ({ ...prev, role }));
+    setProfile({ ...profile, role: role });
   }
 
   function handleNotificationChange() {
-    setProfile((prev) => ({ ...prev, notificationsEnabled: !prev.notificationsEnabled }));
+    setProfile({ ...profile, notificationsEnabled: !profile.notificationsEnabled });
   }
 
   function handleIncrease() {
-    setQuantity((prev) => prev + 1);
+    setQuantity(quantity + 1);
   }
 
   function handleDecrease() {
-    setQuantity((prev) => Math.max(1, prev - 1));
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   }
 
   function handleAddItem(newItem: string) {
-    setItems((prev) => [...prev, newItem]);
+    setItems([...items, newItem]);
   }
 
   return (
