@@ -5,16 +5,11 @@ import "./css/component.css";
 
 type ProductListProps = {
   products: Product[];
-  isLoading?: false;
 };
 
-export function ProductList({ products, isLoading = false }: ProductListProps) {
+export function ProductList({ products }: ProductListProps) {
   const [category, setCategory] = useState<string>("");
   const [filterMode, setFilterMode] = useState<boolean>(false);
-
-  if (isLoading) {
-    return <p>Loading products...</p>;
-  }
 
   function handleCategory(category: string): void {
     setFilterMode(true);
@@ -31,10 +26,9 @@ export function ProductList({ products, isLoading = false }: ProductListProps) {
     <>
       <button onClick={allMode}>All</button>
       <button onClick={() => handleCategory("beauty")}>beauty</button>
-      <button onClick={() => handleCategory("smartphones")}>smartphones</button>
       <button onClick={() => handleCategory("fragrances")}>fragrances</button>
-      <button onClick={() => handleCategory("electronics")}>electronics</button>
       <button onClick={() => handleCategory("furniture")}>furniture</button>
+      <button onClick={() => handleCategory("groceries")}>groceries</button>
 
       <div className="productList">
         {!products || products.length === 0 ? (
