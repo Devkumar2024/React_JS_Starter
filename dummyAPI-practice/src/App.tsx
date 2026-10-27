@@ -1,6 +1,7 @@
 import { ProductList } from "./components/ProductList";
 import { ProfileEditor } from "./components/ProfileEditor";
-import { Cart} from "./components/Cart";
+import { AddItemForm } from "./components/AddItemForm";
+import { Cart } from "./components/Cart";
 import type { Profile, Product } from "./types";
 import { useState, useEffect } from "react";
 
@@ -12,6 +13,7 @@ function App() {
   });
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
+  const [items, setItems] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,12 +42,16 @@ function App() {
     setProfile((prev) => ({ ...prev, notificationsEnabled: !prev.notificationsEnabled }));
   }
 
-  function handleIncrease(){
-    setQuantity(prev=>prev+1)
+  function handleIncrease() {
+    setQuantity((prev) => prev + 1);
   }
 
-  function handleDecrease(){
-    setQuantity(prev=>(Math.max(1, prev-1)))
+  function handleDecrease() {
+    setQuantity((prev) => Math.max(1, prev - 1));
+  }
+
+  function handleAddItem(newItem: string) {
+    setItems((prev) => [...prev, newItem]);
   }
 
   return (
@@ -56,10 +62,13 @@ function App() {
         onRoleChange={handleRoleChange}
         onToggleNotifications={handleNotificationChange}
       />
-      <Cart quantity={quantity}
-      onIncrease={handleIncrease}
-      onDecrease={handleDecrease}
-      />
+      <Cart quantity={quantity} onIncrease={handleIncrease} onDecrease={handleDecrease} />
+      <AddItemForm onAdd={handleAddItem} />
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
       <ProductList products={products} />
     </main>
   );
