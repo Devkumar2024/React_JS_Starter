@@ -1,20 +1,59 @@
-.productCard{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: bisque;
-    padding: 15px;
-    margin: 5px;
-    border-radius: 8px;
+/* --- Product List Container --- */
+.productList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;        /* Zaroori hai: taaki cards jagah khatam hone par niche wali line mein aa sakein */
+  gap: 15px;              /* Cards ke beech mein proper spacing ke liye */
+  padding: 15px;
+  box-sizing: border-box;
+  width: 100%;
+  /* overflow: hidden hata diya hai taaki content chup na ho */
 }
 
-.productCard h5{
-    padding: 0;
-    margin: 0;
+/* --- Individual Product Card --- */
+.productCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: bisque;
+  padding: 15px;
+  border-radius: 8px;
+  
+  /* Size fix karna zaroori hai taaki cards barabar dikhein */
+  width: 220px;           /* Har card ki fixed width */
+  flex-grow: 1;           /* Agar chahte hain ki choti screen par stretch ho toh */
+  box-sizing: border-box;
 }
 
-.productList{
-    display: flex;
-    flex-direction: row;
+/* --- Product Title --- */
+.productCard h5 {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  word-break: break-word; /* Lambe text ko todne ke liye */
+}
+
+/* Yeh rule ab project ke har <button> par khud-ba-khud lag jayega */
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  margin-right: 8px; 
+  margin-bottom: 8px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  transform: scale(0.98);
 }

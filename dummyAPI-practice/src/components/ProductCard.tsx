@@ -9,6 +9,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     // No need to assign key here
     <div className="productCard">
+      <i>{product.category}</i>
       <h5>{product.title}</h5>
       <p>{product.price}</p>
     </div>
