@@ -10,11 +10,11 @@ type ProductCardProps = {
 
 export function ProductCard({ product, isChecked = false, onToggle }: ProductCardProps) {
   const { id, title, price, category, brand, thumbnail, description } = product;
-  
+
   return (
     // No need to assign key here
     <div className="productCard">
-      ❤️
+      {isChecked ? "❤️" : "💔"}
       <input type="checkbox" checked={isChecked} onChange={() => onToggle?.(id)} />
       <br />
       <i>{category}</i>

@@ -1,3 +1,9 @@
+export type Profile = {
+  name: string;
+  role: string;
+  notificationsEnabled: boolean;
+};
+
 export interface Dimensions {
   width: number;
   height: number;
