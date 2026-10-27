@@ -13,7 +13,7 @@ const products: Product[] = [
 function App() {
   return (
     <main>
-      <ProductList product={products} />
+      <ProductList products={products} />
     </main>
   );
 }
