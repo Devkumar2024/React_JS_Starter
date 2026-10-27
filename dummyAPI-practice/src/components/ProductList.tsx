@@ -10,20 +10,35 @@ type ProductListProps = {
 export function ProductList({ products }: ProductListProps) {
   const [category, setCategory] = useState<string>("all");
   const [serachedItem, setSerachItem] = useState<string>("");
+  const [favIds, setFavIds] = useState<number[]>([]);
+  const [favMode, setFavMode] = useState<boolean>(false);
 
   function handleCategory(category: string): void {
     setCategory(category);
   }
 
-  const filteredByCategory = products.filter((ele) => {
-    const categoryMatch = category === "all" ? true : category === ele.category;
-    const searchMatch = ele.title.toLowerCase().includes(serachedItem.trim().toLowerCase());
+  const visibleProducts = products.filter((ele) => {
+    const categoryMatch: boolean = category === "all" ? true : category === ele.category;
+    const searchMatch: boolean = ele.title.toLowerCase().includes(serachedItem.trim().toLowerCase());
+    const favMatch: boolean = favMode ? favIds.includes(ele.id) : true;
 
-    return categoryMatch && searchMatch;
+    return categoryMatch && searchMatch && favMatch;
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSerachItem(e.currentTarget.value);
+  }
+
+  function handleToggle(id: number) {
+    // if includes remove id
+    if (favIds.includes(id)) {
+      setFavIds(favIds.filter((ele) => ele !== id));
+    } else {
+      setFavIds([...favIds, id]);
+    }
+  }
+  function handleFavs() {
+    setFavMode((prev) => !prev);
   }
 
   return (
@@ -36,12 +51,17 @@ export function ProductList({ products }: ProductListProps) {
       <button onClick={() => handleCategory("fragrances")}>fragrances</button>
       <button onClick={() => handleCategory("furniture")}>furniture</button>
       <button onClick={() => handleCategory("groceries")}>groceries</button>
+      <button style={{ backgroundColor: favMode ? "red" : "black" }} onClick={handleFavs}>
+        Favourites
+      </button>
 
       <div className="productList">
         {!products || products.length === 0 ? (
           <p>No Products Exsits</p>
         ) : (
-          filteredByCategory.map((ele) => <ProductCard key={ele.id} product={ele} />)
+          visibleProducts.map((ele) => (
+            <ProductCard key={ele.id} product={ele} isChecked={favIds.includes(ele.id)} onToggle={handleToggle} />
+          ))
         )}
       </div>
     </>
