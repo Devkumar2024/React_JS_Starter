@@ -15,12 +15,19 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const [items, setItems] = useState<string[]>([]);
+  const url = "https://dummyjson.com/products";
 
   useEffect(() => {
     async function getApiData() {
+      // retry bug
+      setIsLoading(true); 
+      setHasError(false);
+
       try {
-        const urlResponse = await fetch("https://dummyjson.com/products");
+        console.log("effect chala, retryCount =", retryCount);
+        const urlResponse = await fetch(url);
 
         if (!urlResponse.ok) {
           setHasError(true);
@@ -37,14 +44,24 @@ function App() {
       }
     }
     getApiData();
-  }, []);
+  }, [retryCount]); // jb jb retry button click hoga will trigger retrycount, causing api fetch w/o page reload
+
+  function handleRetry() {
+    setRetryCount((prev) => prev + 1);
+    console.log(retryCount);
+  }
 
   if (isLoading) {
     return <p>Loading.....</p>;
   }
 
   if (hasError) {
-    return <p>Something went wrong. Please try again.</p>;
+    return (
+      <div>
+        <p>Something went wrong. Please try again.</p>
+        <button onClick={handleRetry}>Retry</button>
+      </div>
+    );
   }
 
   function handleNameChange(name: string) {
