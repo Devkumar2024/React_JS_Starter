@@ -14,7 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <h5>
         {product.title}, {product.brand}
       </h5>
-      <b>{product.price}</b>
+      <b>{product.price} $</b>
       <p>{product.description}</p>
     </div>
   );
