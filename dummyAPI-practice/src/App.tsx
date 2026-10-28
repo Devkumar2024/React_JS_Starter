@@ -28,6 +28,7 @@ function App() {
       try {
         console.log("effect chala, retryCount =", retryCount);
         const urlResponse = await fetch(url);
+        document.title = `Product ${quantity}`
 
         if (!urlResponse.ok) {
           setHasError(true);
@@ -44,7 +45,7 @@ function App() {
       }
     }
     getApiData();
-  }, [retryCount]); // jb jb retry button click hoga will trigger retrycount, causing api fetch w/o page reload
+  }, [retryCount, quantity]); // jb jb retry button click hoga will trigger retrycount, causing api fetch w/o page reload
 
   function handleRetry() {
     setRetryCount((prev) => prev + 1);
@@ -105,7 +106,7 @@ function App() {
           <li key={index}>{item}</li>
         ))}
       </ul>
-      <ProductList products={products} />
+     <ProductList products={products} />
     </main>
   );
 }
