@@ -1,0 +1,71 @@
+/* Container styling */
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Heading */
+.inputForm h1 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+}
+
+/* Input Fields */
+.inputForm input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Placeholder styling */
+.inputForm input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
+/* Hover and Focus States */
+.inputForm input[type="text"]:hover {
+  border-color: #9ca3af;
+}
+
+.inputForm input[type="text"]:focus {
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Dynamic Output Paragraph */
+.inputForm p {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #374151;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  word-break: break-word;
+}
