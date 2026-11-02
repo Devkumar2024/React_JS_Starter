@@ -20,7 +20,7 @@ function App() {
   // signup wale users yahan store honge
   const [users, setUsers] = useState<User[]>([]);
 
-  // tab badalte time sab kuch clear kar do
+  // clears everything on changing tab
   function switchForm(login: boolean) {
     setIsLogin(login);
     setName("");
