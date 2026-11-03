@@ -9,7 +9,7 @@ type UserCardProps = {
 export function UserCard({ user, isChecked, onToggle }: UserCardProps) {
   return (
     <div className="userCard">
-      <input type="checkbox" name="contacted" checked={isChecked} onChange={() => onToggle(user.id)} />
+      <input type="checkbox" checked={isChecked} onChange={() => onToggle(user.id)} />
       <img src={user.image} alt={user.firstName} width={100} />
 
       <div>
