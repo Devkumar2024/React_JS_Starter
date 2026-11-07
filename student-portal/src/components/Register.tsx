@@ -8,7 +8,6 @@ type RegisterProps = {
   onSwitchToLogin: () => void;
 };
 
-// age input se string aati hai, confirmPassword sirf UI ka field hai
 type RegisterFormState = Omit<RegisterData, "age"> & {
   age: string;
   confirmPassword: string;
@@ -63,10 +62,8 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
     const { name, value } = e.currentTarget;
     const field = name as keyof RegisterFormState;
     const nextData = { ...formData, [field]: value };
-
     setFormData(nextData);
 
-    // submit ke baad hi live-validate karo — pehle nahi
     if (submitted) {
       const fieldError = validate(nextData)[field];
       setErrors((prev) => {
@@ -89,12 +86,10 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
     e.preventDefault();
     setSubmitted(true);
 
-    const validationErrors = validate(formData);
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
+    const v = validate(formData);
+    setErrors(v);
+    if (Object.keys(v).length > 0) return;
 
-    // confirmPassword UI-only, age string → number,
-    // email/name/companyName trim + email lowercase (login ke liye canonical form)
     const { confirmPassword, age, ...rest } = formData;
     onSuccess({
       ...rest,
@@ -110,17 +105,29 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
   }
 
   return (
-    <div>
-      <h5>Register</h5>
+    <div className="authCard">
+      <h2>Create your account</h2>
+      <p className="authSubtitle">Takes less than a minute</p>
+
       <form onSubmit={handleSubmit} noValidate>
-        <input type="text" name="name" value={formData.name} placeholder="Enter name" onChange={handleInputChange} />
+        <input
+          type="text"
+          name="name"
+          autoComplete="name"
+          value={formData.name}
+          placeholder="Full name"
+          aria-invalid={!!errors.name}
+          onChange={handleInputChange}
+        />
         {errors.name && <p className="error">{errors.name}</p>}
 
         <input
           type="email"
           name="email"
+          autoComplete="email"
           value={formData.email}
-          placeholder="Enter email"
+          placeholder="Email address"
+          aria-invalid={!!errors.email}
           onChange={handleInputChange}
         />
         {errors.email && <p className="error">{errors.email}</p>}
@@ -128,14 +135,18 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
         <input
           type="number"
           step="1"
+          inputMode="numeric"
+          min={18}
+          max={100}
           name="age"
           value={formData.age}
-          placeholder="Enter age"
+          placeholder="Age"
+          aria-invalid={!!errors.age}
           onChange={handleInputChange}
         />
         {errors.age && <p className="error">{errors.age}</p>}
 
-        <select name="role" value={formData.role} onChange={handleInputChange}>
+        <select name="role" value={formData.role} aria-invalid={!!errors.role} onChange={handleInputChange}>
           <option value="">Select role</option>
           {ROLES.map((r) => (
             <option key={r} value={r}>
@@ -148,8 +159,10 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
         <input
           type="text"
           name="companyName"
+          autoComplete="organization"
           value={formData.companyName}
           placeholder="Company name"
+          aria-invalid={!!errors.companyName}
           onChange={handleInputChange}
         />
         {errors.companyName && <p className="error">{errors.companyName}</p>}
@@ -159,7 +172,8 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
           name="password"
           autoComplete="new-password"
           value={formData.password}
-          placeholder="Enter password"
+          placeholder="Password (min 8 characters)"
+          aria-invalid={!!errors.password}
           onChange={handleInputChange}
         />
         {errors.password && <p className="error">{errors.password}</p>}
@@ -170,13 +184,14 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
           autoComplete="new-password"
           value={formData.confirmPassword}
           placeholder="Confirm password"
+          aria-invalid={!!errors.confirmPassword}
           onChange={handleInputChange}
         />
         {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
-        <button type="submit">Register</button>
+        <button type="submit">Create account</button>
         <button type="button" onClick={onSwitchToLogin}>
-          Already have an account? Login
+          Already have an account? Sign in
         </button>
       </form>
     </div>

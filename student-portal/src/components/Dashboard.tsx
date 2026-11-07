@@ -11,7 +11,9 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   return (
     <div className="dashboard">
       <div className="dashTop">
-        <div className="avatar">{firstLetter}</div>
+        <div className="avatar" aria-hidden="true">
+          {firstLetter}
+        </div>
         <div>
           <h2>Welcome, {user.name}!</h2>
           <p className="loggedIn">You are logged in</p>

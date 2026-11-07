@@ -8,21 +8,10 @@ type LoginProps = {
   onSwitchToRegister: () => void;
 };
 
-type LoginFormState = {
-  email: string;
-  password: string;
-};
+type LoginFormState = { email: string; password: string };
+type LoginErrors = { email?: string; password?: string; form?: string };
 
-type LoginErrors = {
-  email?: string;
-  password?: string;
-  form?: string;
-};
-
-const initialForm: LoginFormState = {
-  email: "",
-  password: "",
-};
+const initialForm: LoginFormState = { email: "", password: "" };
 
 export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
   const [credentials, setCredentials] = useState<LoginFormState>(initialForm);
@@ -31,12 +20,9 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
 
   function validate(data: LoginFormState): LoginErrors {
     const errs: LoginErrors = {};
-
     if (!data.email.trim()) errs.email = "Email is required";
     else if (!EMAIL_REGEX.test(data.email)) errs.email = "Enter a valid email";
-
     if (!data.password) errs.password = "Password is required";
-
     return errs;
   }
 
@@ -44,23 +30,19 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
     const { name, value } = e.currentTarget;
     const field = name as keyof LoginFormState;
     const nextData = { ...credentials, [field]: value };
-
     setCredentials(nextData);
 
     setErrors((prev) => {
       const next = { ...prev };
-      // "Invalid credentials" typing pe hamesha clear ho
       delete next.form;
 
-      // submit ke baad hi field error live update karo
       if (submitted) {
-        const validationErrors = validate(nextData);
-        if (validationErrors[field]) next[field] = validationErrors[field];
+        const v = validate(nextData);
+        if (v[field]) next[field] = v[field];
         else delete next[field];
       } else {
         delete next[field];
       }
-
       return next;
     });
   }
@@ -69,20 +51,13 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
     e.preventDefault();
     setSubmitted(true);
 
-    const validationErrors = validate(credentials);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    const v = validate(credentials);
+    if (Object.keys(v).length > 0) return setErrors(v);
 
-    // Register mein email trim + lowercase store hota hai — yahan bhi same normalize
     const normalizedEmail = credentials.email.trim().toLowerCase();
     const match = users.find((u) => u.email.toLowerCase() === normalizedEmail && u.password === credentials.password);
 
-    if (!match) {
-      setErrors({ form: "Invalid email or password" });
-      return;
-    }
+    if (!match) return setErrors({ form: "Invalid email or password" });
 
     setCredentials({ ...initialForm });
     setErrors({});
@@ -91,17 +66,20 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
   }
 
   return (
-    <div>
-      <h5>Login</h5>
+    <div className="authCard">
+      <h2>Welcome back</h2>
+      <p className="authSubtitle">Sign in to your account</p>
+
       <form onSubmit={handleSubmit} noValidate>
-        {errors.form && <p className="error">{errors.form}</p>}
+        {errors.form && <div className="formError">{errors.form}</div>}
 
         <input
           type="email"
           name="email"
           autoComplete="email"
           value={credentials.email}
-          placeholder="Enter email"
+          placeholder="Email address"
+          aria-invalid={!!errors.email}
           onChange={handleInputChange}
         />
         {errors.email && <p className="error">{errors.email}</p>}
@@ -111,14 +89,15 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
           name="password"
           autoComplete="current-password"
           value={credentials.password}
-          placeholder="Enter password"
+          placeholder="Password"
+          aria-invalid={!!errors.password}
           onChange={handleInputChange}
         />
         {errors.password && <p className="error">{errors.password}</p>}
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign in</button>
         <button type="button" onClick={onSwitchToRegister}>
-          Create account
+          Create an account
         </button>
       </form>
     </div>
