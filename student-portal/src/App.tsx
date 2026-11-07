@@ -1,13 +1,8 @@
+import { AuthFlow } from "./components/AuthFlow";
 import "./App.css";
-import { BasicSubmitForm } from "./components/BasicSubmitForm";
-
 
 function App() {
-  return (
-    <div>
-      <BasicSubmitForm/>
-    </div>
-  );
+  return <AuthFlow />;
 }
 
 export default App;
