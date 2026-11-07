@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import type { RegisterData } from "../types/types";
-import { EMAIL_REGEX } from "../utils/validation";   // ← yahi add karo
+import { EMAIL_REGEX } from "../utils/validation";
 
 type LoginProps = {
   users: RegisterData[];
   onSuccess: (user: RegisterData) => void;
   onSwitchToRegister: () => void;
+};
+
+type LoginFormState = {
+  email: string;
+  password: string;
 };
 
 type LoginErrors = {
@@ -14,41 +19,74 @@ type LoginErrors = {
   form?: string;
 };
 
+const initialForm: LoginFormState = {
+  email: "",
+  password: "",
+};
 
 export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [credentials, setCredentials] = useState<LoginFormState>(initialForm);
   const [errors, setErrors] = useState<LoginErrors>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  function validate(data: LoginFormState): LoginErrors {
+    const errs: LoginErrors = {};
+
+    if (!data.email.trim()) errs.email = "Email is required";
+    else if (!EMAIL_REGEX.test(data.email)) errs.email = "Enter a valid email";
+
+    if (!data.password) errs.password = "Password is required";
+
+    return errs;
+  }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
-    setCredentials((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: undefined, form: undefined }));
+    const field = name as keyof LoginFormState;
+    const nextData = { ...credentials, [field]: value };
+
+    setCredentials(nextData);
+
+    setErrors((prev) => {
+      const next = { ...prev };
+      // "Invalid credentials" typing pe hamesha clear ho
+      delete next.form;
+
+      // submit ke baad hi field error live update karo
+      if (submitted) {
+        const validationErrors = validate(nextData);
+        if (validationErrors[field]) next[field] = validationErrors[field];
+        else delete next[field];
+      } else {
+        delete next[field];
+      }
+
+      return next;
+    });
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitted(true);
 
-    const errs: LoginErrors = {};
-    if (!credentials.email.trim()) errs.email = "Email is required";
-    else if (!EMAIL_REGEX.test(credentials.email)) errs.email = "Enter a valid email";
-
-    if (!credentials.password) errs.password = "Password is required";
-
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
+    const validationErrors = validate(credentials);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    const match = users.find(
-      (u) => u.email.toLowerCase() === credentials.email.toLowerCase() && u.password === credentials.password,
-    );
+    // Register mein email trim + lowercase store hota hai — yahan bhi same normalize
+    const normalizedEmail = credentials.email.trim().toLowerCase();
+    const match = users.find((u) => u.email.toLowerCase() === normalizedEmail && u.password === credentials.password);
 
     if (!match) {
       setErrors({ form: "Invalid email or password" });
       return;
     }
 
+    setCredentials({ ...initialForm });
     setErrors({});
+    setSubmitted(false);
     onSuccess(match);
   }
 
@@ -61,6 +99,7 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
         <input
           type="email"
           name="email"
+          autoComplete="email"
           value={credentials.email}
           placeholder="Enter email"
           onChange={handleInputChange}
@@ -70,6 +109,7 @@ export function Login({ users, onSuccess, onSwitchToRegister }: LoginProps) {
         <input
           type="password"
           name="password"
+          autoComplete="current-password"
           value={credentials.password}
           placeholder="Enter password"
           onChange={handleInputChange}

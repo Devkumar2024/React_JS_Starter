@@ -1,214 +1,143 @@
-/* -------- page -------- */
-
 body {
-  background-color: #f4f4f4;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #222222;
-  padding: 20px;
   margin: 0;
+  padding: 30px 10px;
+  background: #5a7edc;
+  font: 11px Tahoma, Verdana, sans-serif;
+  color: black;
 }
 
 h1 {
+  margin: 0 0 12px;
   text-align: center;
-  color: #222222;
-  font-size: 26px;
-  border-bottom: 2px solid #222222;
-  padding-bottom: 12px;
-  margin: 0 0 24px 0;
-}
-
-/* -------- form box -------- */
-
-.basicForm {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border: 2px solid #222222;
-}
-
-/* form ka title — box ki top edge tak full width */
-h5 {
-  font-size: 16px;
-  margin: -20px -20px 16px -20px;   /* box ke padding ko kaat ke full-width banao */
-  padding: 12px 20px;
-  background-color: #222222;
+  font-size: 13px;
   color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
-/* -------- inputs -------- */
+/* window */
+.basicForm {
+  width: 320px;
+  margin: 0 auto;
+  padding: 0 12px 12px;
+  box-sizing: border-box;
+  background: #ece9d8;
+  border: 3px solid #0831d9;
+  border-top: 0;
+}
 
-/* checkbox/radio ko chhod ke baki inputs */
-input:not([type="checkbox"]):not([type="radio"]),
+/* title bar */
+h5 {
+  margin: 0 -12px 12px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: white;
+  background: linear-gradient(#0997ff, #0053ee 10%, #0050ee 90%, #003dd7);
+}
+
+input,
 select {
   display: block;
   width: 100%;
+  height: 22px;
   box-sizing: border-box;
-  margin-top: 10px;
-  padding: 8px 10px;
-  font-size: 14px;
-  font-family: inherit;
-  border: 1px solid #444444;
-  background-color: white;
-  color: #222222;
+  margin-top: 6px;
+  padding: 2px 4px;
+  font: 11px Tahoma, Verdana, sans-serif;
+  color: black;
+  background: white;
+  border: 1px solid #7f9db9;
 }
 
-/* focus pe subtle highlight */
-input:focus,
-select:focus {
-  background-color: #fffbe6;
-  border-color: #0000cc;
-  outline: none;
-}
-
-/* -------- buttons -------- */
-
-/* default button = secondary (outlined) */
 button {
-  margin-top: 12px;
-  margin-right: 8px;
-  padding: 8px 14px;
-  font-size: 14px;
-  font-family: inherit;
-  color: #0000cc;
-  background-color: white;
-  border: 1px solid #0000cc;
+  min-width: 75px;
+  margin: 12px 6px 0 0;
+  padding: 3px 10px;
+  font: 11px Tahoma, Verdana, sans-serif;
+  color: black;
+  background: #ece9d8;
+  border: 1px solid #003c74;
+  border-radius: 3px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #eef0ff;
+  box-shadow: inset 0 0 0 2px #f8b330;
 }
-
-/* primary submit button — blue filled */
-button[type="submit"] {
-  color: white;
-  background-color: #0000cc;
-  border: 1px solid #0000cc;
-}
-
-button[type="submit"]:hover {
-  background-color: #000088;
-}
-
-/* -------- error messages -------- */
 
 .error {
+  margin: 2px 0 0;
+  font-size: 10px;
   color: #cc0000;
-  font-size: 12px;
-  margin: 4px 0 0 0;
-  padding-left: 8px;
-  border-left: 3px solid #cc0000;
 }
 
-/* -------- dashboard -------- */
-
-.dashboard {
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border: 2px solid #222222;
-  text-align: left;
-  box-sizing: border-box;
-}
-
-/* top row — avatar + welcome */
+/* dashboard */
 .dashTop {
   display: flex;
   align-items: center;
-  border-bottom: 2px solid #222222;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-  line-height: 46px;                /* border ke 2px ko account karta hai */
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  background-color: #0000cc;
-  color: white;
-  border: 2px solid #222222;
-  margin-right: 15px;
-  flex-shrink: 0;                   /* flex mein shrink na ho */
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #aca899;
 }
 
 .dashTop h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 13px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: #0053ee;
+  border: 1px solid #003c74;
 }
 
 .loggedIn {
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #008800;
+  margin: 2px 0 0;
+  color: #1a7a1a;
 }
 
-/* do info boxes — gap se, margin-right se nahi */
 .infoRow {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 .infoBox {
   flex: 1;
-  border: 1px solid #222222;
-  background-color: #f4f4f4;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
+  background: white;
+  border: 1px solid #7f9db9;
 }
 
 .infoLabel {
   margin: 0;
-  font-size: 11px;
-  color: #666666;
-  letter-spacing: 1px;
+  font-size: 10px;
+  color: #666;
 }
 
 .infoValue {
-  margin: 4px 0 0 0;
-  font-size: 18px;
+  margin: 2px 0 0;
   font-weight: bold;
 }
 
-/* details table */
 .detailsTable {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
-  margin-bottom: 8px;
+  background: white;
 }
 
 .detailsTable td {
-  border: 1px solid #222222;
-  padding: 8px 10px;
+  padding: 4px 6px;
+  border: 1px solid #aca899;
 }
 
 .tableLabel {
-  background-color: #eaeaea;
+  width: 60px;
   font-weight: bold;
-  width: 90px;
-}
-
-/* logout button — red, secondary override */
-.logoutBtn {
-  width: 100%;
-  margin-top: 8px;
-  margin-right: 0;
-  padding: 10px;
-  color: white;
-  background-color: #cc0000;
-  border: 1px solid #cc0000;
-}
-
-.logoutBtn:hover {
-  background-color: #990000;
 }

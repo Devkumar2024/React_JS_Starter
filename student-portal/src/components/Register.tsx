@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { RegisterData } from "../types/types";
-import { EMAIL_REGEX, ROLES, needsCompany } from "../utils/validation";
+import { EMAIL_REGEX, ROLES } from "../utils/validation";
 
 type RegisterProps = {
   users: RegisterData[];
@@ -18,16 +18,17 @@ type FormErrors = Partial<Record<keyof RegisterFormState, string>>;
 const initialForm: RegisterFormState = {
   name: "",
   email: "",
-  companyName: "",
   age: "",
+  role: "",
+  companyName: "",
   password: "",
   confirmPassword: "",
-  role: "",
 };
 
 export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
   const [formData, setFormData] = useState<RegisterFormState>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [submitted, setSubmitted] = useState(false);
 
   function validate(data: RegisterFormState): FormErrors {
     const errs: FormErrors = {};
@@ -43,54 +44,69 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
     if (!data.age) errs.age = "Age is required";
     else {
       const age = Number(data.age);
-      if (!Number.isInteger(age) || age < 18 || age > 100)
-        errs.age = "Age must be a whole number between 18 and 100";
+      if (!Number.isInteger(age) || age < 18 || age > 100) errs.age = "Age must be a whole number between 18 and 100";
     }
 
     if (!data.role) errs.role = "Please select a role";
-
-    if (needsCompany(data.role) && !data.companyName.trim())
-      errs.companyName = "Company name is required";
+    if (!data.companyName.trim()) errs.companyName = "Company name is required";
 
     if (!data.password) errs.password = "Password is required";
     else if (data.password.length < 8) errs.password = "Password must be at least 8 characters";
 
     if (!data.confirmPassword) errs.confirmPassword = "Please confirm your password";
-    else if (data.confirmPassword !== data.password)
-      errs.confirmPassword = "Passwords do not match";
+    else if (data.confirmPassword !== data.password) errs.confirmPassword = "Passwords do not match";
 
     return errs;
-  }
-
-  function clearErrors(...fields: (keyof RegisterFormState)[]) {
-    setErrors((prev) => {
-      const next = { ...prev };
-      fields.forEach((f) => delete next[f]);
-      return next;
-    });
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.currentTarget;
     const field = name as keyof RegisterFormState;
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    const nextData = { ...formData, [field]: value };
 
-    // role badla toh companyName ka error bhi clear karo (Intern → no company)
-    if (field === "role") clearErrors("role", "companyName");
-    else clearErrors(field);
+    setFormData(nextData);
+
+    // submit ke baad hi live-validate karo — pehle nahi
+    if (submitted) {
+      const fieldError = validate(nextData)[field];
+      setErrors((prev) => {
+        const next = { ...prev };
+        if (fieldError) next[field] = fieldError;
+        else delete next[field];
+        return next;
+      });
+    } else {
+      setErrors((prev) => {
+        if (!prev[field]) return prev;
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitted(true);
 
     const validationErrors = validate(formData);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    // confirmPassword UI-only hai — RegisterData mein nahi jaata
+    // confirmPassword UI-only, age string → number,
+    // email/name/companyName trim + email lowercase (login ke liye canonical form)
     const { confirmPassword, age, ...rest } = formData;
-    onSuccess({ ...rest, age: Number(age) });
+    onSuccess({
+      ...rest,
+      name: rest.name.trim(),
+      email: rest.email.trim().toLowerCase(),
+      companyName: rest.companyName.trim(),
+      age: Number(age),
+    });
+
     setFormData({ ...initialForm });
+    setErrors({});
+    setSubmitted(false);
   }
 
   return (
@@ -129,22 +145,19 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
         </select>
         {errors.role && <p className="error">{errors.role}</p>}
 
-        {needsCompany(formData.role) && (
-          <>
-            <input
-              type="text"
-              name="companyName"
-              value={formData.companyName}
-              placeholder="Company name"
-              onChange={handleInputChange}
-            />
-            {errors.companyName && <p className="error">{errors.companyName}</p>}
-          </>
-        )}
+        <input
+          type="text"
+          name="companyName"
+          value={formData.companyName}
+          placeholder="Company name"
+          onChange={handleInputChange}
+        />
+        {errors.companyName && <p className="error">{errors.companyName}</p>}
 
         <input
           type="password"
           name="password"
+          autoComplete="new-password"
           value={formData.password}
           placeholder="Enter password"
           onChange={handleInputChange}
@@ -154,6 +167,7 @@ export function Register({ users, onSuccess, onSwitchToLogin }: RegisterProps) {
         <input
           type="password"
           name="confirmPassword"
+          autoComplete="new-password"
           value={formData.confirmPassword}
           placeholder="Confirm password"
           onChange={handleInputChange}
