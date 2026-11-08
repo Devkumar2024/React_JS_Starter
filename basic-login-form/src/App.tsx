@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { SignupInput, LoginInput, SignupInputErrors, LoginInputErrors } from "./types/types";
 import "./App.css";
 
@@ -20,6 +20,16 @@ function App() {
 
   // sucess state
   const [success, setSuccess] = useState<boolean>(false);
+  // stored users
+  const [storedUser, setStoredUser] = useState<SignupInput[]>(() => {
+    const saved = localStorage.getItem("myUsers");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    // Jab bhi storedUser badlega, ye line chalegi aur save kar degi
+    localStorage.setItem("myUsers", JSON.stringify(storedUser));
+  }, [storedUser]); // <-- dependency array: sirf tab chale jab storedUser badle
 
   function handleMode(e: React.MouseEvent<HTMLButtonElement>) {
     const { name } = e.currentTarget;
@@ -62,26 +72,45 @@ function App() {
       setSuccess(false);
       return; // ← validation fail → aage mat jao
     }
+    setStoredUser((prev) => [...prev, newUser]); 
     setSuccess(true);
   }
 
-  function handleLoginSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  function handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     let emailError: string | null = null;
     let passwordError: string | null = null;
 
+    // 1. Validation
     if (loginUser.email === "") emailError = "Email is required";
     else if (!loginUser.email.includes("@") || !loginUser.email.includes(".")) emailError = "Invalid Email";
 
     if (loginUser.password === "") passwordError = "Password is required";
     else if (loginUser.password.length < 6) passwordError = "Password must be at least 6 characters";
 
-    setLoginErrors({
-      email: emailError ?? undefined,
-      password: passwordError ?? undefined,
-    });
-  }
+    // 2. Agar validation fail hai, toh errors set karke yahin ruk jao (return)
+    if (emailError || passwordError) {
+      setLoginErrors({
+        email: emailError ?? undefined,
+        password: passwordError ?? undefined,
+      });
+      setSuccess(false);
+      return;
+    }
 
+    // 3. Agar validation pass hai, toh database (storedUser) mein check karo
+    const foundUser = storedUser.find((u) => u.email === loginUser.email && u.password === loginUser.password);
+
+    // 4. Match mila ya nahi
+    if (foundUser) {
+      setLoginErrors({}); // purane errors clear karo
+      setSuccess(true);
+    } else {
+      setLoginErrors({ email: "Invalid email or password" }); // generic error
+      setSuccess(false);
+    }
+  }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
     if (isLogin) {
