@@ -1,40 +1,85 @@
 import React, { useState } from "react";
-import type { User, LoginUser } from "./types/types";
+import type { SignupInput, LoginInput, SignupInputErrors, LoginInputErrors } from "./types/types";
 import "./App.css";
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [newUser, setNewuser] = useState<User>({
+  const [newUser, setNewuser] = useState<SignupInput>({
     name: "",
     age: 0,
     email: "",
     company: "",
     password: "",
   });
-  const [loginUser, setLoginUser] = useState<LoginUser>({
+  const [loginUser, setLoginUser] = useState<LoginInput>({
     email: "",
     password: "",
   });
+  const [signupErrors, setSignupErrors] = useState<SignupInputErrors>({});
+  const [loginErrors, setLoginErrors] = useState<LoginInputErrors>({});
+
+  // sucess state
+  const [success, setSuccess] = useState<boolean>(false);
 
   function handleMode(e: React.MouseEvent<HTMLButtonElement>) {
     const { name } = e.currentTarget;
-    if (name === "login") setIsLogin(true);
-    else setIsLogin(false);
-
-    // console.log(isLogin);
+    setIsLogin(name === "login");
+    setSuccess(false); // mode badla → purana success clear
+    setSignupErrors({}); // purane errors bhi clear (warna wahi problem)
+    setLoginErrors({});
   }
 
   function handleSignUpSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    // react state updates are asynchronous
+    let nameError: string | null = null;
+    let ageError: string | null = null;
+    let companyError: string | null = null;
+    let emailError: string | null = null;
+    let passwordError: string | null = null;
 
-    console.log(newUser);
+    if (newUser.name.trim() === "") nameError = "Name is Required";
+    if (newUser.company === "") companyError = "Company name is Required";
+    if (!newUser.age || newUser.age <= 0) ageError = "Invalid";
+
+    if (newUser.email === "") emailError = "Email is required";
+    else if (!newUser.email.includes("@") || !newUser.email.includes(".")) emailError = "Invalid Email";
+
+    if (newUser.password === "") passwordError = "Password is required";
+    else if (newUser.password.length < 6) passwordError = "Password must be at least 6 characters";
+
+    const hasError = nameError || ageError || companyError || emailError || passwordError;
+
+    setSignupErrors({
+      name: nameError ?? undefined,
+      age: ageError ?? undefined,
+      company: companyError ?? undefined,
+      email: emailError ?? undefined,
+      password: passwordError ?? undefined,
+    });
+
+    if (hasError) {
+      setSuccess(false);
+      return; // ← validation fail → aage mat jao
+    }
+    setSuccess(true);
   }
 
   function handleLoginSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    let emailError: string | null = null;
+    let passwordError: string | null = null;
 
-    // console.log(newUser);
-    console.log(loginUser);
+    if (loginUser.email === "") emailError = "Email is required";
+    else if (!loginUser.email.includes("@") || !loginUser.email.includes(".")) emailError = "Invalid Email";
+
+    if (loginUser.password === "") passwordError = "Password is required";
+    else if (loginUser.password.length < 6) passwordError = "Password must be at least 6 characters";
+
+    setLoginErrors({
+      email: emailError ?? undefined,
+      password: passwordError ?? undefined,
+    });
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -53,59 +98,71 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="mainContainer">
       <h5>React Login form</h5>
-      <div className="mainContainer">
-        <button name="login" onClick={handleMode}>
+      <div className="form_toggle">
+        <button type="button" name="login" onClick={handleMode} className={isLogin ? "active" : ""}>
           Login
         </button>
-        <button name="signup" onClick={handleMode}>
+        <button type="button" name="signup" onClick={handleMode} className={!isLogin ? "active" : ""}>
           Sign Up
         </button>
-
-        {!isLogin ? (
-          <div className="signupForm">
-            <form onSubmit={handleSignUpSubmit}>
-              <input type="text" name="name" value={newUser.name} placeholder="enter name" onChange={handleChange} />
-              <input type="text" name="age" value={newUser.age} placeholder="enter age" onChange={handleChange} />
-              <input
-                type="text"
-                name="company"
-                value={newUser.company}
-                placeholder="Company name"
-                onChange={handleChange}
-              />
-              <input type="email" name="email" value={newUser.email} placeholder="email" onChange={handleChange} />
-              <input
-                type="password"
-                name="password"
-                value={newUser.password}
-                placeholder="password"
-                onChange={handleChange}
-              />
-              <button className="btn" type="submit">
-                Submit info
-              </button>
-            </form>
-          </div>
-        ) : (
-          <div className="loginForm">
-            <form onSubmit={handleLoginSubmit}>
-              <input type="email" name="email" value={loginUser.email} placeholder="email" onChange={handleChange} />
-              <input
-                type="password"
-                name="password"
-                value={loginUser.password}
-                placeholder="password"
-                onChange={handleChange}
-              />
-              <button className="btn" type="submit">
-                Submit info
-              </button>
-            </form>
-          </div>
-        )}
       </div>
+
+      {!isLogin ? (
+        <div className="signupForm">
+          <form onSubmit={handleSignUpSubmit}>
+            <input type="text" name="name" value={newUser.name} placeholder="enter name" onChange={handleChange} />
+            {signupErrors.name && <p style={{ color: "red" }}>{signupErrors.name}</p>}
+
+            <input type="text" name="age" value={newUser.age} placeholder="enter age" onChange={handleChange} />
+            {signupErrors.age && <p style={{ color: "red" }}>{signupErrors.age}</p>}
+            <input
+              type="text"
+              name="company"
+              value={newUser.company}
+              placeholder="Company name"
+              onChange={handleChange}
+            />
+            {signupErrors.company && <p style={{ color: "red" }}>{signupErrors.company}</p>}
+
+            <input type="email" name="email" value={newUser.email} placeholder="email" onChange={handleChange} />
+            {signupErrors.email && <p style={{ color: "red" }}>{signupErrors.email}</p>}
+
+            <input
+              type="password"
+              name="password"
+              value={newUser.password}
+              placeholder="password"
+              onChange={handleChange}
+            />
+            {signupErrors.password && <p style={{ color: "red" }}>{signupErrors.password}</p>}
+            <button className="btn" type="submit">
+              Submit info
+            </button>
+            {success && <p style={{ color: "green" }}>Signup successful</p>}
+          </form>
+        </div>
+      ) : (
+        <div className="loginForm">
+          <form onSubmit={handleLoginSubmit}>
+            <input type="email" name="email" value={loginUser.email} placeholder="email" onChange={handleChange} />
+            {loginErrors.email && <p style={{ color: "red" }}>{loginErrors.email}</p>}
+            <input
+              type="password"
+              name="password"
+              value={loginUser.password}
+              placeholder="password"
+              onChange={handleChange}
+            />
+            {loginErrors.password && <p style={{ color: "red" }}>{loginErrors.password}</p>}
+            <button className="btn" type="submit">
+              Submit info
+            </button>
+            {success && <p style={{ color: "green" }}>{isLogin ? "Login successful" : "Signup successful"}</p>}
+          </form>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-export type User = {
+export type SignupInput = {
   name: string;
   age: number;
   email: string;
@@ -6,7 +6,23 @@ export type User = {
   password: string;
 };
 
-export type LoginUser = {
+export type LoginInput = Pick<SignupInput, 'email' | 'password'>
+
+// server sends back 
+export type User = {
+  id: string;
+  name: string;
+  age: number;
   email: string;
-  password: string;
+  company: string;
 };
+
+export type SignupInputErrors = {
+  name?: string;
+  age?: string;
+  email?: string;
+  company?: string;
+  password?: string;
+};
+
+export type LoginInputErrors = Pick<SignupInputErrors, "email" | "password">;
