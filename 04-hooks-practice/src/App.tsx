@@ -1,12 +1,18 @@
 import "./App.css";
+import { DummyAPI } from "./playground/DummyAPI";
+import { Timer } from "./playground/Timer";
 // import { Counter } from "./playground/Counter";
 // import { NameBox } from "./playground/NameBox";
-import { Roaster } from "./playground/Roaster";
+// import { Roaster } from "./playground/Roaster";
+
+
 
 function App() {
   return (
     <div>
-      <Roaster />
+      {/* <Roaster /> */}
+      <Timer/>
+      <DummyAPI/>
     </div>
   );
 }

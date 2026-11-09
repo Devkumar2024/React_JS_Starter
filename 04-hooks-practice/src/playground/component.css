@@ -1,0 +1,74 @@
+.dummyAPI {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.dummyAPI h1 {
+  grid-column: 1 / -1;      /* h1 poori width le, warna ek card jitni jagah me squeeze ho jaayega */
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  color: #111;
+}
+
+.productCard {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.15s ease;
+}
+
+.productCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.productCard img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;      /* thumbnails transparent PNG hote hain, contain better */
+  background: #f7f7f7;
+  border-radius: 6px;
+}
+
+.productCard h5 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: #111;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;    /* 2 lines ke baad ... */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.productCard p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Price line alag highlight */
+.productCard p:nth-of-type(1) {
+  color: #0a7d3f;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Description truncate */
+.productCard p:nth-of-type(2) {
+  font-size: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
