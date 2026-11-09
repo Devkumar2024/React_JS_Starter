@@ -72,11 +72,11 @@ function App() {
       setSuccess(false);
       return; // ← validation fail → aage mat jao
     }
-    setStoredUser((prev) => [...prev, newUser]); 
+    setStoredUser((prev) => [...prev, newUser]);
     setSuccess(true);
   }
 
-  function handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleLoginSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     let emailError: string | null = null;
