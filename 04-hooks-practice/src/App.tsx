@@ -1,6 +1,7 @@
 import "./App.css";
 import { RefCounter } from "./playground/RefCounter";
 import { Login } from "./playground/Login";
+import { Cachedcalc } from "./playground/CachedCalc";
 // import { DummyAPI } from "./playground/DummyAPI";
 // import { LocalEffect } from "./playground/LocalEffect";
 // import { Timer } from "./playground/Timer";
@@ -18,6 +19,7 @@ function App() {
       {/* <Roaster/> */}
       <RefCounter />
       <Login />
+      <Cachedcalc />
     </div>
   );
 }
