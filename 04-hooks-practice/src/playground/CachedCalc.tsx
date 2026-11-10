@@ -1,7 +1,16 @@
 import React, { useMemo, useState } from "react";
+interface ChildComponentProps {
+  name: string;
+}
+
+const ChildComponent = React.memo(({ name }: ChildComponentProps) => {
+  console.log(`Change in Child Component`);
+  return <h1>Hi my name is {name}</h1>;
+});
 
 export function Cachedcalc() {
   const [num, setNum] = useState<number>(0);
+  const [name, setName] = useState<string>(`dev`);
   const [minus, setMinus] = useState<number>(1000);
 
   const haevyCalc = useMemo(() => {
@@ -18,6 +27,7 @@ export function Cachedcalc() {
     if (name === "add") setNum((prev) => prev + 1);
     else if (name === "minus") setMinus((prev) => prev - 1);
   }
+
   return (
     <div>
       <h1>
@@ -29,6 +39,16 @@ export function Cachedcalc() {
       <button name="minus" onClick={handleMutate}>
         Minus
       </button>
+
+
+      {/* Child component will only change when we mutate the value of its props */}
+      <input
+        type="text"
+        value={name}
+        placeholder="...name(child component)"
+        onChange={(e) => setName(e.target.value)}
+      />
+      <ChildComponent name={name} />
     </div>
   );
 }
