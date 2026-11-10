@@ -5,7 +5,7 @@ import "./component.css";
 export function DummyAPI() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isloading, setIsloading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean|null>(false);
   const [retry, setRetry] = useState<number>(0);
 
   useEffect(() => {
