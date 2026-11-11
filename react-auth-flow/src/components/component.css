@@ -1,8 +1,7 @@
 /* Main Containers */
 .loginForm, .signUpForm, .dashboard-wrapper {
   background-color: #ffffff;
-  border: 3px solid #661267;
-  border-radius: 8px;
+  border: 2px  solid #000;
   overflow: hidden; 
   margin: 40px auto;
   max-width: 450px;
@@ -48,7 +47,6 @@
   color: #2b6cb0;
   border: 1px solid #2b6cb0;
   padding: 10px;
-  border-radius: 4px;
 }
 
 /* Dashboard Layout */
