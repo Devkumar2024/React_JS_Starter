@@ -1,0 +1,106 @@
+/* Main Containers */
+.loginForm, .signUpForm, .dashboard-wrapper {
+  background-color: #ffffff;
+  border: 3px solid #661267;
+  border-radius: 8px;
+  overflow: hidden; 
+  margin: 40px auto;
+  max-width: 450px;
+}
+
+.dashboard-wrapper {
+  max-width: 750px; 
+}
+
+/* Global Headers (Login/Signup) */
+.heading, .dashboard-header {
+  background-color: #2b6cb0; 
+  color: #ffffff;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.heading h1, .dashboard-header h2 {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Form Area */
+.loginForm form, .signUpForm form {
+  padding: 25px;
+}
+
+/* Bottom Switch Buttons for Login/Signup */
+.loginForm > button[type="button"], 
+.signUpForm > button[type="button"] {
+  display: block;
+  width: calc(100% - 50px);
+  margin: 0 25px 25px 25px;
+  background-color: #ffffff;
+  color: #2b6cb0;
+  border: 1px solid #2b6cb0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Dashboard Layout */
+.dashboard-content {
+  padding: 25px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Cards */
+.profile-card, .work-card {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: #ffffff; 
+  padding: 20px;
+}
+
+/* Card Headers */
+.profile-card h3, .work-card h3 {
+  font-size: 16px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+  margin-top: 0; 
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+/* THE FIX: Remove the blue box from the profile card wrapper */
+.profile-card .heading {
+  background-color: transparent;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.profile-card .heading h3 {
+  margin-bottom: 0;
+}
+
+/* Card Text */
+.profile-card p, .work-card p {
+  color: #4a5568;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+}
+
+.work-card form {
+  padding: 0;
+}
+
+.work-card button {
+  width: 100%;
+  margin-top: 5px;
+}
