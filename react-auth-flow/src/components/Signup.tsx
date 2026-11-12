@@ -12,6 +12,7 @@ export function Signup({ onSignUpSuccess, onSwitchToLogin, users }: SignupProps)
   const [signUpUser, setsignUpUser] = useState<SignUpFormDetails>({
     name: "",
     age: "",
+    contact: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -24,6 +25,7 @@ export function Signup({ onSignUpSuccess, onSwitchToLogin, users }: SignupProps)
     let nameError: string | null = null;
     let emailError: string | null = null;
     let ageError: string | null = null;
+    let contactError : string | null = null;
     let passwordError: string | null = null;
     let confirmError: string | null = null;
 
@@ -32,6 +34,9 @@ export function Signup({ onSignUpSuccess, onSwitchToLogin, users }: SignupProps)
     if (!signUpUser.age.trim()) ageError = "Age required";
     else if (isNaN(Number(signUpUser.age))) ageError = "Invalid input";
     else if (Number(signUpUser.age) < 18) ageError = "Must be 18+";
+
+    if(isNaN(Number(signUpUser.contact))) contactError = 'Input invalid'
+    else if(!signUpUser.contact.trim()) contactError = `Enter input`
 
     if (!signUpUser.email.trim()) emailError = `Input is empty!!`;
     else if (!(signUpUser.email.trim().includes("@") && signUpUser.email.trim().includes(".")))
@@ -42,21 +47,24 @@ export function Signup({ onSignUpSuccess, onSwitchToLogin, users }: SignupProps)
 
     if (!signUpUser.confirmPassword) confirmError = "Confirm your password";
     else if (signUpUser.confirmPassword !== signUpUser.password) confirmError = "Passwords don't match";
+    console.log(signUpUser);
 
     setValueErrors({
       name: nameError,
       age: ageError,
+      contact: contactError,
       email: emailError,
       password: passwordError,
       confirmPassword: confirmError,
     });
 
-    if (!emailError && !passwordError && !ageError && !nameError && !confirmError) {
+    if (!emailError && !passwordError && !ageError && !contactError && !nameError && !confirmError) {
       const stored: StoredUser = {
         name: signUpUser.name,
         email: signUpUser.email,
         password: signUpUser.password,
         age: signUpUser.age,
+        contact: signUpUser.contact,
       };
 
       const alreadyMember = users.find((u) => u.email === signUpUser.email);
@@ -90,6 +98,9 @@ export function Signup({ onSignUpSuccess, onSwitchToLogin, users }: SignupProps)
 
         <input type="text" name="age" value={signUpUser.age} onChange={handleSignupChange} placeholder="...enter age" />
         {valueErrors.age && <p style={{ color: "red" }}>{valueErrors.age}</p>}
+
+        <input type="text" name="contact" value={signUpUser.contact} onChange={handleSignupChange} placeholder="...contact no" />
+        {valueErrors.contact && <p style={{ color: "red" }}>{valueErrors.contact}</p>}
 
         <input
           type="text"

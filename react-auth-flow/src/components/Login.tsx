@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { LoginFormDetails, LoginFormErrors, User, StoredUser } from "../types/types";
-import './component.css'
+import "./component.css";
 
 type LoginProps = {
   users: StoredUser[];
@@ -10,6 +10,7 @@ type LoginProps = {
 
 export function Login({ onLoginSuccess, onSwitchToSignup, users }: LoginProps) {
   const [loginUser, setLoginUser] = useState<LoginFormDetails>({
+    contact: "",
     email: "",
     password: "",
   });
@@ -20,6 +21,10 @@ export function Login({ onLoginSuccess, onSwitchToSignup, users }: LoginProps) {
 
     let emailError: string | null;
     let passwordError: string | null;
+    let contactError: string | null = null;
+
+    if (isNaN(Number(loginUser.contact))) contactError = "Input invalid";
+    else if (!loginUser.contact?.trim()) contactError = `Enter input`;
 
     if (!loginUser.email.trim()) emailError = `Input is empty!!`;
     else if (loginUser.email.trim().includes("@") && loginUser.email.trim().includes(".")) emailError = null;
@@ -30,16 +35,18 @@ export function Login({ onLoginSuccess, onSwitchToSignup, users }: LoginProps) {
     else passwordError = null;
 
     setValueErrors({
+      contact : contactError,
       email: emailError,
       password: passwordError,
     });
 
-    const found = users.find((u)=> u.email === loginUser.email && u.password === loginUser.password);
-    if(found){
-      onLoginSuccess({email : loginUser.email,  name: found.name })
-    }
-    else{
-      setValueErrors({email: "Invalid Credentails", password: "Invalid Credentails"})
+    console.log(loginUser);
+
+    const found = users.find((u) => u.email === loginUser.email && u.password === loginUser.password);
+    if (found) {
+      onLoginSuccess({ email: loginUser.email, name: found.name });
+    } else {
+      setValueErrors({ email: "Invalid Credentails", password: "Invalid Credentails" });
     }
   }
 
@@ -61,6 +68,15 @@ export function Login({ onLoginSuccess, onSwitchToSignup, users }: LoginProps) {
       <form onSubmit={handleLoginSubmit}>
         <input
           type="text"
+          name="contact"
+          value={loginUser.contact}
+          onChange={handleloginChange}
+          placeholder="...contact no"
+        />
+        {valueErrors.contact && <p style={{ color: "red" }}>{valueErrors.contact}</p>}
+
+        <input
+          type="text"
           name="email"
           value={loginUser.email}
           onChange={handleloginChange}
@@ -78,7 +94,9 @@ export function Login({ onLoginSuccess, onSwitchToSignup, users }: LoginProps) {
 
         <button type="submit">Submit</button>
       </form>
-      <button type="button" onClick={onSwitchToSignup}>New user? Signup</button>
+      <button type="button" onClick={onSwitchToSignup}>
+        New user? Signup
+      </button>
     </div>
   );
 }
