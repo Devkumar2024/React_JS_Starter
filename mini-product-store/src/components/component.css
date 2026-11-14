@@ -1,0 +1,26 @@
+.productList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+  justify-content: center;
+}
+
+.productCard {
+  border: 1px solid #cf8610;
+  border-radius: 8px;
+  padding: 16px;
+  flex: 1 1 250px; /* Grow, Shrink, Base size */
+  max-width: 320px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productCard .price {
+  font-weight: bold;
+  color: #4f46e5; /* Purple color from PDF */
+  margin: 8px 0;
+}
