@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type { Product } from "./types/product";
 import "./App.css";
 import { ProductList } from "./components/ProductList";
@@ -11,6 +11,9 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [retry, setRetry] = useState<number>(0);
+  // giving dom ka reference
+  const listTopRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [serachItem, setSerachItem] = useState<string>("");
   const [category, setCategory] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<string>("");
@@ -50,6 +53,8 @@ function App() {
     );
   }
 
+
+
   const filteredProducts: Product[] = products.filter((product) => {
     // === not incl. coz of strict filtering
     const serachFilter: boolean = product.title.toLowerCase().includes(serachItem.toLowerCase().trim()) ? true : false;
@@ -66,12 +71,14 @@ function App() {
 
   return (
     <div className="appContainer">
-      <h1>Product List</h1>
+      <h1 ref={listTopRef}>Product List</h1>
       {/* we are making signature of setSerachItem in serachbar */}
-      <SearchBar searchItem={serachItem} onSearchChange={setSerachItem} />
+      <SearchBar searchItem={serachItem} inputRef={searchInputRef} onSearchChange={setSerachItem} />
+      <button onClick={() => searchInputRef.current?.focus()}>Focus</button>
       <CategoryFilter selectedCategory={category} onButtonToggle={setCategory} />
       <SortDropdown onDropdownSelect={setSortOrder} />
-      <ProductList products={sortedProducts} />
+      {sortedProducts.length === 0 ? <h3>No prdoucts...</h3> : <ProductList products={sortedProducts} />}
+      <button onClick={() => listTopRef.current?.scrollIntoView({ behavior: "smooth" })}>Back to Top</button>
     </div>
   );
 }
