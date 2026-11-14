@@ -24,3 +24,15 @@
   color: #4f46e5; /* Purple color from PDF */
   margin: 8px 0;
 }
+
+.categoryFilter {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+
+.categoryFilter button.active {
+  background-color: #56e546;
+}
