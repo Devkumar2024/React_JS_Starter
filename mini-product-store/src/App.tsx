@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import type { Product } from "./types/product";
 import "./App.css";
 import { ProductList } from "./components/ProductList";
+import { SearchBar } from "./components/SearchBar";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [retry, setRetry] = useState<number>(0);
+  const [serachItem, setSerachItem] = useState<string>("");
 
   useEffect(() => {
     async function loadProducts() {
@@ -43,10 +45,21 @@ function App() {
       </div>
     );
   }
+ 
+  const filteredProducts : Product [] = products.filter((product)=>{
+    // === not incl. coz of strict filtering
+      const serachFilter : boolean = product.title.toLowerCase().includes(serachItem.toLowerCase().trim()) ? true : false;
+
+      return serachFilter;
+  })
+
 
   return (
     <div className="appContainer">
-      <ProductList products={products} />
+      <h1>Product List</h1>
+      {/* we are making signature of setSerachItem in serachbar */}
+      <SearchBar searchItem ={serachItem} onSearchChange={setSerachItem}/>
+      <ProductList products={filteredProducts} />
     </div>
   );
 }
